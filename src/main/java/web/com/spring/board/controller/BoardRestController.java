@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.exceptionGroup_return;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
@@ -33,6 +36,31 @@ public class BoardRestController {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		log.info("msg", listboard);
 		return new ResponseEntity<>(listboard,HttpStatus.OK);
 	}
+	
+	//게시글 작성
+	@PostMapping("/board")
+	public ResponseEntity<String>boardwrite(@RequestBody BoardVO vo)throws Exception{
+		log.info("글 작성");
+		try {
+			int result = service.boardInsert(vo);
+			
+			if(result >0) {
+				System.out.println("o.k");
+				
+			}else {
+				System.out.println();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	//게시글 조회
+	//게시글 수정
+	//게시글 삭제
+	
 }

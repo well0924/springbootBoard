@@ -5,9 +5,9 @@
 	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
 		insert into 
 		p_bbs
-		(board_title,board_writer,board_contents,regdate,updatedate)
+		(board_title,board_writer,board_contents,count,regdate,updatedate)
 		values
-		(#{boardTitle},#{boardWriter},#{boardContents},now(),null)
+		(#{boardTitle},#{boardWriter},#{boardContents},0,now(),null)
 	</insert>
 	<!-- 게시글 목록 -->
 	<select id="boardlist" resultType="web.com.spring.board.vo.BoardVO">

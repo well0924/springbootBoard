@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.exceptionGroup_return;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
@@ -54,4 +55,11 @@ public class BoardController {
 		return mv;
 	}
 	
+	//글 조회화면
+	@GetMapping("/rewriteForm")
+	public ModelAndView boardReForm()throws Exception{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("board/detail");
+		return mv;
+	}
 }
