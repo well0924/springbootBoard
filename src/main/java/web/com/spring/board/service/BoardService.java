@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import web.com.spring.board.mapper.BoaradMapper;
+import web.com.spring.board.mapper.BoardMapper;
 import web.com.spring.board.vo.BoardVO;
 
 @Service
 @AllArgsConstructor
 public class BoardService {
 	
-	private BoaradMapper mapper;
+	private BoardMapper mapper;
 	
 	//게시글 작성
 	public int boardInsert(BoardVO vo) throws Exception{

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import web.com.spring.board.vo.BoardVO;
 
 @Mapper
-public interface BoaradMapper {
+public interface BoardMapper {
 	
 	//게시글 작성
 	public int boardInsert(BoardVO vo) throws Exception;

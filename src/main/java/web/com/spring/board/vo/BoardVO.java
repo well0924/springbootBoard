@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Setter
 @Getter
+@ToString
 public class BoardVO {
 	
 	private Integer boardId;
@@ -19,9 +21,9 @@ public class BoardVO {
 	private String boardWriter;
 	private String boardContents;
 	private Integer count;
-	@JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime regDate;
-	@JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateDate;
 	
 //	create table p_bbs(
