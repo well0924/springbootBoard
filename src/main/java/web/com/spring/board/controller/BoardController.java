@@ -53,6 +53,7 @@ public class BoardController {
 	@GetMapping("/writeForm")
 	public ModelAndView boardWritePage()throws Exception{
 		ModelAndView mv = new ModelAndView();
+		log.info("작성 페이지");
 		mv.setViewName("board/write");
 		return mv;
 	}
@@ -61,9 +62,11 @@ public class BoardController {
 	@GetMapping("/detailForm/{boardid}")
 	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId)throws Exception{
 		ModelAndView mv = new ModelAndView();
+		log.info("조회화면");
 		mv.setViewName("board/detail");
 		BoardVO vo =null;
 		vo = service.detailBoard(boardId);
+		//조회수 증가 기능 c.o
 		service.countup(boardId);
 		
 		mv.addObject("detail", vo);
