@@ -18,6 +18,7 @@ public class BoardVO {
 	private String boardTitle;
 	private String boardWriter;
 	private String boardContents;
+	private Integer count;
 	@JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
 	private LocalDateTime regDate;
 	@JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
@@ -28,6 +29,7 @@ public class BoardVO {
 //	  board_title varchar(400) not null,
 //	  board_writer varchar(400) not null,
 //	  board_contents varchar(2000) not null,
+//	  count int,	
 //	  regdate datetime default now(),
 //	  updatedate datetime default now(),
 //	  primary key(board_id)
