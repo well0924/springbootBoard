@@ -23,6 +23,14 @@
   	<label for="floatingTextarea" class="form-label">글 내용</label>
   	<textarea class="form-control"  id="contents" name="boardContents">[[${detail.boardContents}]]</textarea>
   </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">작성일자</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" name="regDate" readonly="readonly" th:value="${detail.regDate}">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">수정일자</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" name="updateDate" readonly="readonly" th:value="${detail.updateDate}">
+  </div>
   <button type="button" class="btn btn-primary" onclick="boardupdate()">글수정</button>
   <button type="reset" class="btn btn-primary" onclick="boardDelete()">글삭제</button>
   <a class="btn btn-primary" href="/board/list">목록으로가기</a>

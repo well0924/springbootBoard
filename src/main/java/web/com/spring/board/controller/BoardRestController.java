@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.exceptionGroup_return;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
@@ -63,9 +63,37 @@ public class BoardRestController {
 	}
 	//게시글 수정
 	@PutMapping("/board/{id}")
-	public ResponseEntity<String>boardUpdate(@PathVariable("id") Integer boardId)throws Exception{
+	public ResponseEntity<String>boardUpdate(@PathVariable("id") Integer boardId,@RequestBody BoardVO vo)throws Exception{
+		log.info("글수정");
+		try {
+			int result = service.boardUpdate(vo);
+			
+			if(result >0) {
+				System.out.println("c.o");
+			}else {
+				System.out.println("n.k");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	//게시글 삭제
-	
+	@DeleteMapping("/board/{id}")
+	public ResponseEntity<String>boardDelete(@PathVariable("id") Integer boardId)throws Exception{
+		log.info("글 삭제");
+		try {
+			int result = service.boardDelete(boardId);
+			
+			if(result > 0) {
+				System.out.println("c.o");
+			}else {
+				System.out.println("n.k");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
