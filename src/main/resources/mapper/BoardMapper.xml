@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="web.com.spring.board.mapper.BoardMapper">
-	<!-- 게시글 작성 -->
+	<!-- 게시글 작성-->
 	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
 		insert into 
 		p_bbs
@@ -41,4 +41,12 @@
  			p_bbs
  		where board_id = #{boardId}	 
  	</delete>
+ 	<!-- 조회수 증가 -->
+ 	<update id="countup" parameterType="int">
+ 		update p_bbs set count = count+1 where board_id = #{boardId}
+ 	</update>
+ 	<!-- 게시글 총개수 -->
+ 	<select id="countsum" resultType="int">
+ 		select count(*) from p_bbs
+ 	</select>
 </mapper>

@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
+개시글 총개수:<span th:text="${count}"></span>
 <table class="table">
   <thead>
     <tr>
@@ -24,7 +25,11 @@
     <tr th:each="list:${boardList}">
      <td><input type="checkbox" name="RowCheck" value="${list.boardId}"></td>
      <td th:text="${list.boardId}"></td>
-     <td th:text="${list.boardTitle}"></td>
+     <td>
+   	    <a th:href="@{'/board/detailForm/'+${list.boardId}}">
+           <span th:text="${list.boardTitle}"></span>
+        </a>
+     </td>
      <td th:text="${list.boardWriter}"></td>
      <td th:text="${#temporals.format(list.regDate,'yyyy-MM-dd HH:mm:ss')}"></td>
      <td th:text="${list.count}"></td>

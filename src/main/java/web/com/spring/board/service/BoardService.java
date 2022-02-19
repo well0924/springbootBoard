@@ -34,4 +34,12 @@ public class BoardService {
 	public int boardDelete(Integer boardId)throws Exception{
 		return mapper.boardDelete(boardId);
 	};
+	//조회수 증가
+	public void countup(Integer boardId)throws Exception{
+		 mapper.countup(boardId);
+	};
+	//게시글 총갯수
+	public int countsum()throws Exception{
+		return mapper.countsum();
+	};
 }

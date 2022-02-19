@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.exceptionGroup_return;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
@@ -36,10 +36,12 @@ public class BoardController {
 		List<BoardVO> list= null;
 		try {
 			list = service.boardlist();
+			       
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//데이터 바인딩
+		mv.addObject("count", service.countsum());
 		mv.addObject("boardList", list);
 		log.info("....list outprinting");
 		//화면 설정
@@ -56,10 +58,15 @@ public class BoardController {
 	}
 	
 	//글 조회화면
-	@GetMapping("/rewriteForm")
-	public ModelAndView boardReForm()throws Exception{
+	@GetMapping("/detailForm/{boardid}")
+	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("board/detail");
+		BoardVO vo =null;
+		vo = service.detailBoard(boardId);
+		service.countup(boardId);
+		
+		mv.addObject("detail", vo);
 		return mv;
 	}
 }

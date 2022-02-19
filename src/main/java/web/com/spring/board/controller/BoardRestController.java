@@ -25,7 +25,7 @@ public class BoardRestController {
 	
 	private BoardService service;
 	
-	//게시글 목록
+	//게시글 목록 c.o
 	@GetMapping("/list")
 	public ResponseEntity<List<BoardVO>>boardList()throws Exception{
 		log.info("글 목록");
@@ -40,7 +40,7 @@ public class BoardRestController {
 		return new ResponseEntity<>(listboard,HttpStatus.OK);
 	}
 	
-	//게시글 작성
+	//게시글 작성 c.o
 	@PostMapping("/board")
 	public ResponseEntity<String>boardwrite(@RequestBody BoardVO vo)throws Exception{
 		log.info("글 작성");
@@ -59,7 +59,6 @@ public class BoardRestController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	//게시글 조회
 	//게시글 수정
 	//게시글 삭제
 	
