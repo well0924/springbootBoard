@@ -2,8 +2,10 @@ package web.com.spring.board.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,30 +40,20 @@ public class BoardRestController {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		log.info("msg", listboard);
+		
 		return new ResponseEntity<>(listboard,HttpStatus.OK);
 	}
 	
 	//게시글 작성 c.o
-	@PostMapping("/board")
+	@PostMapping(value="/board")
 	public ResponseEntity<String>boardwrite(@RequestBody BoardVO vo)throws Exception{
-		log.info("글 작성");
-		try {
-			int result = service.boardInsert(vo);
-			
-			if(result >0) {
-				System.out.println("o.k");
-				
-			}else {
-				System.out.println();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		
+		int result = service.boardInsert(vo);
+		return result == 1 ? 
+				new ResponseEntity<>("success",HttpStatus.OK) : 
+				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	//게시글 수정
+	//게시글 수정 c.o
 	@PutMapping("/board/{id}")
 	public ResponseEntity<String>boardUpdate(@PathVariable("id") Integer boardId,@RequestBody BoardVO vo)throws Exception{
 		log.info("글수정");
@@ -79,7 +71,7 @@ public class BoardRestController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	//게시글 삭제
+	//게시글 삭제 c.o
 	@DeleteMapping("/board/{id}")
 	public ResponseEntity<String>boardDelete(@PathVariable("id") Integer boardId)throws Exception{
 		log.info("글 삭제");

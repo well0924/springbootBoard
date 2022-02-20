@@ -45,10 +45,10 @@ class SampleRestBoard4ApplicationTests {
 //		System.out.println(vo);
 //	}
 	//글 삭제
-	@Test
-	public void deleteTest() throws Exception {
-		BoardVO vo =  new BoardVO();
-		int result = mapper.boardDelete(4);
-		System.out.println("결과:"+result);
-	}
+//	@Test
+//	public void deleteTest() throws Exception {
+//		BoardVO vo =  new BoardVO();
+//		int result = mapper.boardDelete(4);
+//		System.out.println("결과:"+result);
+//	}
 }

@@ -4,11 +4,12 @@
 	<!-- 게시글 작성-->
 	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
 		insert into 
-		p_bbs
-		(board_title,board_writer,board_contents,count,regdate,updatedate)
-		values
-		(#{boardTitle},#{boardWriter},#{boardContents},0,now(),null)
+			p_bbs(board_id,board_title,board_writer,board_contents,reg_date,update_date,HITCOUNT) 
+		values(
+				#{boardId},#{boardTitle},#{boardWriter},#{boardContents},now(),null,0
+			)
 	</insert>
+	
 	<!-- 게시글 목록 o.k-->
 	<select id="boardlist" resultType="web.com.spring.board.vo.BoardVO">
 		select * from p_bbs
@@ -31,12 +32,12 @@
 			<if test="boardContents neq null and boardTitle neq ''">
 				board_contents =#{boardContents},
 			</if>
-			updatedate = now()
+			update_date = now()
 		</set>
 		where 
 			board_id = #{boardId}
  	</update>
- 	<!-- 글 삭제 o.k-->
+ 	<!-- 글 삭제-->
  	<delete id="boardDelete" parameterType="int">
  		delete from 
  			p_bbs
@@ -44,7 +45,7 @@
  	</delete>
  	<!-- 조회수 증가 o.k-->
  	<update id="countup" parameterType="int">
- 		update p_bbs set count = count+1 where board_id = #{boardId}
+ 		update p_bbs set HITCOUNT = HITCOUNT+1 where board_id = #{boardId}
  	</update>
  	<!-- 게시글 총개수 o.k-->
  	<select id="countsum" resultType="int">
