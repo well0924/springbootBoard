@@ -41,18 +41,14 @@ function boardwriter(){
 	var boardWriter = $('#boardWriter').val();
 	var boardContents = $('#boardContents').val();
 	
-	console.log(boardTitle);
-	console.log(boardWriter);
-	console.log(boardContents);
 	var frmdata ={
 			boardTitle,
 			boardWriter,
-			boardContents
-		}
+			boardContents}
+	
 	$.ajax({
 		url:'/api/board',
 		type:'POST',
-		dataType:'json',
 		data:JSON.stringify(frmdata),
 		contentType:'application/json'
 	}).done(function(data,textStatus,xhr){

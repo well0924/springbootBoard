@@ -5,6 +5,29 @@
 	<sql id="paging">
 		LIMIT #{perPageNum}	 OFFSET #{pageStart}
 	</sql>
+	<!-- 검색기능 -->
+	<sql id="search">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType=='T'.toString() and keyword != null and keyword != '' ">
+				AND board_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='C'.toString() and keyword != null and keyword != '' ">
+				AND board_content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='W'.toString() and keyword != null and keyword != '' ">
+				AND board_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='tc'.toString() and keyword != null and keyword != '' ">
+				AND (board_title like CONCAT('%', #{keyword},'%') 
+					or board_content like CONCAT('%',#{keyword},'%'))
+			</if>
+			<if test="searchType=='all'.toString() and keyword != null and keyword != '' ">
+				AND(board_title like CONCAT('%', #{keyword},'%') 
+					or board_content like CONCAT('%',#{keyword},'%') 
+					or board_writer like CONCAT('%',#{keyword},'%'))
+			</if>	
+		</trim>
+	</sql>
 	<!-- 게시글 작성o.k-->
 	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
 		insert into 
@@ -19,10 +42,11 @@
 			* 
 		from 
 			p_bbs
+		<include refid="search"/>	
 		order by
 			board_id desc,
 			reg_date desc
-		<include refid="paging"></include>		
+		<include refid="paging"/>		
 	</select>
 	<!-- 글 조회 o.k-->
 	<select id="detailBoard" parameterType="int" resultType="BoardVO">
