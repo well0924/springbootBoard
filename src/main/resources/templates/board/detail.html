@@ -33,7 +33,16 @@
   </div>
   <button type="button" class="btn btn-primary" onclick="boardupdate()">글수정</button>
   <button type="reset" class="btn btn-primary" onclick="boardDelete()">글삭제</button>
-  <a class="btn btn-primary" href="/board/list">목록으로가기</a>
+  <button type="button" class="btn btn-primary"  onclick="backlist()">목록으로가기</button>
 </form>
 </body>
+<script type="text/javascript" th:inline="javascript">
+//목록으로가기
+function backlist(){
+	var url = '/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
+	console.log(url);
+	location.href= url;	
+	
+}
+</script>
 </html>

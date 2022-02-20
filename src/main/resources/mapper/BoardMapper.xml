@@ -12,18 +12,18 @@
 				AND board_title like CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType=='C'.toString() and keyword != null and keyword != '' ">
-				AND board_content like CONCAT('%', #{keyword}, '%')
+				AND board_contents like CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType=='W'.toString() and keyword != null and keyword != '' ">
 				AND board_writer like CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType=='tc'.toString() and keyword != null and keyword != '' ">
 				AND (board_title like CONCAT('%', #{keyword},'%') 
-					or board_content like CONCAT('%',#{keyword},'%'))
+					or board_contents like CONCAT('%',#{keyword},'%'))
 			</if>
 			<if test="searchType=='all'.toString() and keyword != null and keyword != '' ">
 				AND(board_title like CONCAT('%', #{keyword},'%') 
-					or board_content like CONCAT('%',#{keyword},'%') 
+					or board_contents like CONCAT('%',#{keyword},'%') 
 					or board_writer like CONCAT('%',#{keyword},'%'))
 			</if>	
 		</trim>

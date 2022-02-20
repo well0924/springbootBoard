@@ -71,16 +71,20 @@ public class BoardController {
 	
 	//글 조회화면
 	@GetMapping("/detailForm/{boardid}")
-	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId)throws Exception{
+	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId,Criteria cri)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		log.info("조회화면");
-		mv.setViewName("board/detail");
+		// 페이징 객체(검색)
+		pageinfo paging = new pageinfo();
+		paging.setCri(cri);
+				
 		BoardVO vo =null;
 		vo = service.detailBoard(boardId);
 		//조회수 증가 기능 c.o
 		service.countup(boardId);
-		
+
+		mv.addObject("paging", paging);
 		mv.addObject("detail", vo);
+		mv.setViewName("board/detail");
 		return mv;
 	}
 }
