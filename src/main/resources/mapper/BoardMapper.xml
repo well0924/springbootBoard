@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="web.com.spring.board.mapper.BoardMapper">
-	<!-- 게시글 작성-->
+	<!-- 페이징 조각 -->
+	<sql id="paging">
+		LIMIT #{perPageNum}	 OFFSET #{pageStart}
+	</sql>
+	<!-- 게시글 작성o.k-->
 	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
 		insert into 
 			p_bbs(board_id,board_title,board_writer,board_contents,reg_date,update_date,HITCOUNT) 
@@ -9,10 +13,16 @@
 				#{boardId},#{boardTitle},#{boardWriter},#{boardContents},now(),null,0
 			)
 	</insert>
-	
 	<!-- 게시글 목록 o.k-->
 	<select id="boardlist" resultType="web.com.spring.board.vo.BoardVO">
-		select * from p_bbs
+		select 
+			* 
+		from 
+			p_bbs
+		order by
+			board_id desc,
+			reg_date desc
+		<include refid="paging"></include>		
 	</select>
 	<!-- 글 조회 o.k-->
 	<select id="detailBoard" parameterType="int" resultType="BoardVO">

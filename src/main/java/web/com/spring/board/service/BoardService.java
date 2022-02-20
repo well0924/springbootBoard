@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import web.com.spring.board.mapper.BoardMapper;
 import web.com.spring.board.vo.BoardVO;
+import web.com.spring.common.Criteria;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +20,8 @@ public class BoardService {
 		return mapper.boardInsert(vo);
 	};
 	//게시글 목록
-	public List<BoardVO> boardlist() throws Exception{
-		return mapper.boardlist();
+	public List<BoardVO> boardlist(Criteria cri) throws Exception{
+		return mapper.boardlist(cri);
 	};
 	//게시글 목록 조회
 	public BoardVO detailBoard(Integer boardId)throws Exception{
@@ -39,7 +40,7 @@ public class BoardService {
 		 mapper.countup(boardId);
 	};
 	//게시글 총갯수
-	public int countsum()throws Exception{
-		return mapper.countsum();
+	public int countsum(Criteria cri)throws Exception{
+		return mapper.countsum(cri);
 	};
 }

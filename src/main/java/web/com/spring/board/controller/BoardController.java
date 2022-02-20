@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
 import web.com.spring.board.vo.BoardVO;
+import web.com.spring.common.Criteria;
+import web.com.spring.common.pageinfo;
 
 @Slf4j
 @Controller
@@ -30,20 +32,25 @@ public class BoardController {
 	}
 	//글목록 화면
 	@GetMapping("/list")
-	public ModelAndView boardListPage()throws Exception{
+	public ModelAndView boardListPage(Criteria cri)throws Exception{
 		log.info("목록화면");
 		ModelAndView mv = new ModelAndView();
 		List<BoardVO> list= null;
-		try {
-			list = service.boardlist();
-			       
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		list = service.boardlist(cri);
+		int articlelist = service.countsum(cri);
+		// 페이징 객체(검색)
+		pageinfo paging = new pageinfo();
+		paging.setCri(cri);
+		paging.setTotalCount(articlelist);
 		//데이터 바인딩
-		mv.addObject("count", service.countsum());
+		//데이터 총갯수
+		mv.addObject("count", articlelist);
+		//게시글 
 		mv.addObject("boardList", list);
-		log.info("....list outprinting");
+		//페이징 처리
+		mv.addObject("paging", paging);
+		
 		//화면 설정
 		mv.setViewName("board/list");
 		
