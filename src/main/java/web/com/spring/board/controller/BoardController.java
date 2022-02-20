@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -32,8 +33,11 @@ public class BoardController {
 	}
 	//글목록 화면
 	@GetMapping("/list")
-	public ModelAndView boardListPage(Criteria cri)throws Exception{
-		log.info("목록화면");
+	public ModelAndView boardListPage(
+			@RequestParam(required = false, defaultValue = "T") String searchType,
+			@RequestParam(required = false) String keyword,
+			Criteria cri)throws Exception{
+		
 		ModelAndView mv = new ModelAndView();
 		List<BoardVO> list= null;
 		
@@ -43,14 +47,14 @@ public class BoardController {
 		pageinfo paging = new pageinfo();
 		paging.setCri(cri);
 		paging.setTotalCount(articlelist);
+		paging.setKeyword(keyword);
 		//데이터 바인딩
+		//페이징 처리
+		mv.addObject("paging", paging);
 		//데이터 총갯수
 		mv.addObject("count", articlelist);
 		//게시글 
-		mv.addObject("boardList", list);
-		//페이징 처리
-		mv.addObject("paging", paging);
-		
+		mv.addObject("boardList", list);	
 		//화면 설정
 		mv.setViewName("board/list");
 		

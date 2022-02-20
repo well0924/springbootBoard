@@ -83,6 +83,10 @@
  	</update>
  	<!-- 게시글 총개수 o.k-->
  	<select id="countsum" resultType="int">
- 		select count(*) from p_bbs
+ 		select 
+ 			count(*) 
+		from 
+			p_bbs
+		<include refid="search"/>	
  	</select>
 </mapper>
