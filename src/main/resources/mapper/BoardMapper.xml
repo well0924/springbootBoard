@@ -58,10 +58,10 @@
 			p_bbs 
 		<set>
 			<if test="boardTitle neq null and boardTitle neq ''">
-				board_title =#{boardTitle}
+				board_title =#{boardTitle},
 			</if>
 			<if test="boardWriter neq null and boardTitle neq ''">
-				,board_writer =#{boardWriter},
+				board_writer =#{boardWriter},
 			</if>
 			<if test="boardContents neq null and boardTitle neq ''">
 				board_contents =#{boardContents},

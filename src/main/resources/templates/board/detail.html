@@ -11,18 +11,18 @@
 </head>
 <body>
 <form id = "writeForm">
-  <input type="text" id="boardId" name="boardId" th:value="{detail.boardId}">
+  <input type="hidden" id="boardId" name="boardId" th:value="${detail.boardId}">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">글 제목</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" name="boardTitle" th:value="${detail.boardTitle}">
+    <input type="text" class="form-control" id="boardTitle" name="boardTitle" th:value="${detail.boardTitle}">
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">작성자</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" name="boardWriter" th:value="${detail.boardWriter}">
+    <input type="text" class="form-control" id="boardWriter" name="boardWriter" th:value="${detail.boardWriter}">
   </div>
   <div class="mb-3">
   	<label for="floatingTextarea" class="form-label">글 내용</label>
-  	<textarea class="form-control"  id="contents" name="boardContents">[[${detail.boardContents}]]</textarea>
+  	<textarea class="form-control"  id="boardContents" name="boardContents">[[${detail.boardContents}]]</textarea>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">작성일자</label>
@@ -48,19 +48,41 @@ function backlist(){
 //글 수정 
 function boardupdate(){
 	var boardTitle = $('#boardTitle').val();
-	var boardWriter = $('#boardWriter').val();
 	var boardContents = $('#boardContents').val();
 	var boardId =$('#boardId').val();
 	var frmdata ={
 			boardTitle,
-			boardWriter,
-			boardContents
+			boardContents,
+			boardId
 		}
-	
+	console.log(frmdata);
 	$.ajax({
-		url:'/api/board'+boardId,
+		url:'/api/board/'+boardId,
 		type:'PUT',
 		data:JSON.stringify(frmdata),
+		contentType:'application/json'
+	}).done(function(data,textStatus,xhr){
+		console.log(data);
+		console.log(xhr);
+		alert('success');
+	}).fail(function(data,textStatus,xhr){
+		console.log(xhr);
+		alert('fail');
+	}).always(function(data,textStatus,xhr){
+		console.log(xhr);
+		alert('???');
+	});
+	console.log(frmdata);
+	location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];;
+}
+//글 삭제
+function boardDelete(){
+	var boardId = $('#boardId').val();
+	var Isconfirm = confirm('정말 삭제하시겠습니까?');
+	
+	$.ajax({
+		url:'/api/board/'+boardId,
+		type:'delete',
 		contentType:'application/json'
 	}).done(function(data,textStatus,xhr){
 		console.log(xhr);
@@ -72,12 +94,7 @@ function boardupdate(){
 		console.log(xhr);
 		alert('???');
 	});
-		
-	location.href="/board/list";
-}
-//글 삭제
-function boardDelete(){
-	
+	location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
 }
 </script>
 </html>
