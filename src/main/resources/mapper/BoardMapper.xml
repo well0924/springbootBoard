@@ -60,10 +60,10 @@
 			<if test="boardTitle neq null and boardTitle neq ''">
 				board_title =#{boardTitle},
 			</if>
-			<if test="boardWriter neq null and boardTitle neq ''">
+			<if test="boardWriter neq null and boardWriter neq ''">
 				board_writer =#{boardWriter},
 			</if>
-			<if test="boardContents neq null and boardTitle neq ''">
+			<if test="boardContents neq null and boardContents neq ''">
 				board_contents =#{boardContents},
 			</if>
 			update_date = now()

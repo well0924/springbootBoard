@@ -16,9 +16,9 @@ public interface BoardMapper {
 	public List<BoardVO> boardlist(Criteria cri) throws Exception; 
 	//게시글 목록 조회 o.k
 	public BoardVO detailBoard(Integer boardId)throws Exception;
-	//게시글 수정
+	//게시글 수정 o.k
 	public int boardUpdate(BoardVO vo)throws Exception;
-	//게시글 삭제 
+	//게시글 삭제 o.k
 	public int boardDelete(Integer boardId)throws Exception;
 	//조회수 증가 o.k
 	public void countup(Integer boardId)throws Exception;

@@ -53,13 +53,10 @@ function boardwriter(){
 		contentType:'application/json'
 	}).done(function(data,textStatus,xhr){
 		console.log(xhr);
-		alert('success');
 	}).fail(function(data,textStatus,xhr){
 		console.log(xhr);
-		alert('fail');
 	}).always(function(data,textStatus,xhr){
 		console.log(xhr);
-		alert('???');
 	});
 		
 	location.href="/board/list";
