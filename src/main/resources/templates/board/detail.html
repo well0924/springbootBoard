@@ -11,6 +11,7 @@
 </head>
 <body>
 <form id = "writeForm">
+  <input type="text" id="boardId" name="boardId" th:value="{detail.boardId}">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">글 제목</label>
     <input type="text" class="form-control" id="exampleInputEmail1" name="boardTitle" th:value="${detail.boardTitle}">
@@ -42,6 +43,40 @@ function backlist(){
 	var url = '/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
 	console.log(url);
 	location.href= url;	
+	
+}
+//글 수정 
+function boardupdate(){
+	var boardTitle = $('#boardTitle').val();
+	var boardWriter = $('#boardWriter').val();
+	var boardContents = $('#boardContents').val();
+	var boardId =$('#boardId').val();
+	var frmdata ={
+			boardTitle,
+			boardWriter,
+			boardContents
+		}
+	
+	$.ajax({
+		url:'/api/board'+boardId,
+		type:'PUT',
+		data:JSON.stringify(frmdata),
+		contentType:'application/json'
+	}).done(function(data,textStatus,xhr){
+		console.log(xhr);
+		alert('success');
+	}).fail(function(data,textStatus,xhr){
+		console.log(xhr);
+		alert('fail');
+	}).always(function(data,textStatus,xhr){
+		console.log(xhr);
+		alert('???');
+	});
+		
+	location.href="/board/list";
+}
+//글 삭제
+function boardDelete(){
 	
 }
 </script>
