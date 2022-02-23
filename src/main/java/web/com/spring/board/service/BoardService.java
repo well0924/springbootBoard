@@ -31,6 +31,10 @@ public class BoardService {
 	public int boardUpdate(BoardVO vo)throws Exception{
 		return mapper.boardUpdate(vo);
 	};
+	//게시글 선택삭제
+	public void SelectDelete(String boardId)throws Exception{
+		mapper.SelectDelte(boardId);
+	}
 	//게시글 수정
 	public int boardDelete(Integer boardId)throws Exception{
 		return mapper.boardDelete(boardId);

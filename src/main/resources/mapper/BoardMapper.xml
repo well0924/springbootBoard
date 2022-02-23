@@ -77,6 +77,10 @@
  			p_bbs
  		where board_id = #{boardId}	 
  	</delete>
+ 	<!-- 게시글 선택삭제 -->
+ 	<delete id="SelectDelte">
+ 		delete from p_bbs where board_id = #{boardId}
+ 	</delete>
  	<!-- 조회수 증가 o.k-->
  	<update id="countup" parameterType="int">
  		update p_bbs set HITCOUNT = HITCOUNT+1 where board_id = #{boardId}

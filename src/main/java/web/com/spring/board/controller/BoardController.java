@@ -2,9 +2,13 @@ package web.com.spring.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -86,5 +90,15 @@ public class BoardController {
 		mv.addObject("detail", vo);
 		mv.setViewName("board/detail");
 		return mv;
+	}
+	
+	@PostMapping("/delete")
+	public String selectDelete(HttpServletRequest req)throws Exception{
+		String[] ajaxMsg = req.getParameterValues("valueArr");
+		int size = ajaxMsg.length;
+		for(int i =0; i<size;i++) {
+			service.SelectDelete(ajaxMsg[i]);
+		}
+		return "redirect:/board/list";
 	}
 }

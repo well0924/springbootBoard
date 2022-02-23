@@ -39,21 +39,24 @@ public class BoardRestController {
 	//게시글 작성 c.o
 	@PostMapping(value="/board")
 	public ResponseEntity<String>boardwrite(@RequestBody BoardVO vo)throws Exception{
-		
 		int result = service.boardInsert(vo);
+		log.info("글삭제여부?:"+result);
 		return result == 1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	//게시글 수정 c.o
 	@PutMapping("/board/{id}")
 	public ResponseEntity<String>boardUpdate(@PathVariable("id") Integer boardId,@RequestBody BoardVO vo)throws Exception{
-			int result = service.boardUpdate(vo);			
+		int result = service.boardUpdate(vo);
+		log.info("글삭제여부?:"+result);
 		return result ==1 ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	//게시글 삭제 c.o
 	@DeleteMapping("/board/{id}")
 	public ResponseEntity<String>boardDelete(@PathVariable("id") Integer boardId)throws Exception{
 		int result = service.boardDelete(boardId);
-		
+		log.info("글삭제여부?:"+result);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	
 }
