@@ -142,21 +142,20 @@ $(function(){
 		    else{
 				var chk = confirm("정말 삭제하시겠습니까?");				 
 				$.ajax({
-				    url : url,                    // 전송 URL
-				    type : 'POST',                // GET or POST 방식
-				    traditional : true,
-				    data : {
-				    	valueArr : valueArr        // 보내고자 하는 data 변수 설정
-				    },
-	                success: function(jdata){
-	                    if(jdata = 1) {
-	                        alert("삭제 성공");
-	                        location.href="/board/list";
-	                    }
-	                    else{
-	                        alert("삭제 실패");
-	                    }
-	                }
+				    url : "/board/delete",                    
+				    type : 'POST',                
+				    data : {valueArr : valueArr}
+				}).done(function(jdata){
+					alert(valueArr);
+					if(jdata = 1) {
+                        alert("삭제 성공");
+                        location.replace("/board/list?"+"page="+[[${paging.cri.page}]]+"&perPageNum="+[[${paging.cri.perPageNum}]]+"&searchType="+$('#searchType').val()+"&keyword="+$('#keyword').val());
+                    }
+                    else{
+                        alert("삭제 실패");
+                    }
+				}).fail(function(error){
+					alert(error);
 				});
 			}
 		}

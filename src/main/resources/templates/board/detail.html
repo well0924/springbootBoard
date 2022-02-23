@@ -36,6 +36,37 @@
   <button type="reset" class="btn btn-primary" onclick="boardDelete()">글삭제</button>
   <button type="button" class="btn btn-primary"  onclick="backlist()">목록으로가기</button>
 </form>
+<!-- 댓글 입력부분 -->
+<div class="card-body"> 
+	<form class="form-horizontal"> 
+		<div class="row"> 
+			<div class="form-group col-sm-8"> 
+				<input class="form-control input-sm" id="newReplyText" type="text" placeholder="댓글 입력..."> 
+			</div> 
+			<div class="form-group col-sm-2"> 
+				<input class="form-control input-sm" id="newReplyWriter" type="text" placeholder="작성자"> 
+			</div> 
+			<div class="form-group col-sm-2"> 
+				<button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn"> 
+					<i class="fa fa-save"></i> 저장 
+				</button> 
+			</div> 
+		</div> 
+	</form> 
+</div>
+<!-- 댓글 목록출력 부분 -->
+<div class="card card-primary card-outline"> 
+	<div class="card-header"> 
+		<a href="" class="link-black text-lg"><i class="fas fa-comments margin-r-5 replyCount"></i></a> 
+		<div class="card-tools"> 
+			<button type="button" class="btn primary" data-widget="collapse"> 
+				<i class="fa fa-plus"></i> 
+			</button> 
+		</div> 
+	</div> 
+	<div id="repliesDiv"> </div> 
+</div>
+
 </body>
 <script type="text/javascript" th:inline="javascript">
 //목록으로가기
@@ -95,6 +126,50 @@ function boardDelete(){
 		alert('???');
 	});
 	location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
+}
+
+//댓글 목록 출력
+$(document).ready(function(){
+	replylist();
+});
+
+function replylist(){
+	var boardId = $('#boardId').val();
+	
+	$.ajax({
+		url:"/reply/"+boardId,
+		type:"get",
+		dataType:'json'
+	}).done(function(rep){
+		var result ="";
+		if(rep.length<1){
+			result ="등록된 댓글이 없습니다.";
+		}else{
+		
+			$.each(rep,function(idx,rep){
+				console.log(rep.rnoWriter);
+				console.log(rep.rno);
+				console.log(rep.RnoDate);
+				result +='<br/>';
+				result +='<Strong>작성자:'+rep.rnoWriter;
+				result +'</strong>';
+				result +='<p>글 내용:'+rep.rnoContents;
+				result +='<br/></p>'
+				result +='작성날짜:'+rep.RnoDate;
+				result +='</br>';
+				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn"';
+				result +='data-rno='+rep.rno+'>'
+				result +='댓글수정';
+				result +='</button>';
+				result +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn"';
+				result +='data-rno='+rep.rno+'>';
+				result +='댓글삭제';
+				result +='</button>';
+				result +='<br/>'
+			});
+			$("#repliesDiv").append(result);
+		};
+	});
 }
 </script>
 </html>

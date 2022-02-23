@@ -18,7 +18,7 @@ public class BoardVO {
 	private String boardWriter;
 	private String boardContents;
 	private Integer HITCOUNT;
-	
+		
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime regDate;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,6 +91,7 @@ public class BoardController {
 		return mv;
 	}
 	
+	//선택삭제
 	@PostMapping("/delete")
 	public String selectDelete(HttpServletRequest req)throws Exception{
 		String[] ajaxMsg = req.getParameterValues("valueArr");
