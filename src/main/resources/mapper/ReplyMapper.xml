@@ -4,7 +4,7 @@
 	<!-- 댓글 목록 o.k-->
 	<select id="list" resultType="web.com.spring.reply.vo.ReplyVO">
 		select 
-			bno,rno,rno_writer,rno_contents,rno_date,rno_update 
+			bno, rno ,rno_writer, rno_contents, rno_date, rno_update 
 		from 
 			re_bbs 
 		where 
@@ -12,11 +12,12 @@
 	</select>
 	<!-- 댓글 삽입 o.k-->
 	<insert id="InsertReply" parameterType="web.com.spring.reply.vo.ReplyVO">
-		insert into 
+		insert 
+			into 
 		re_bbs
-			(bno,rno_writer,rno_contents,rno_date,rno_update)
+			( bno, rno_writer, rno_contents, rno_date )
 		values
-			(#{bno},#{RnoWriter},#{RnoContents},now(),null)
+			( #{bno}, #{rnoWriter}, #{rnoContents}, now())
 	</insert>
 	<!-- 댓글 수정 o.k-->
 	<update id="ReplyUpdate" parameterType="web.com.spring.reply.vo.ReplyVO">
@@ -26,13 +27,13 @@
 			rno_contents = #{RnoContents},
 			rno_update = now()
 		where 
-			rno = #{rno}		 
+			rno = #{Rno}		 
 	</update>
 	<!-- 댓글 삭제 o.k-->
 	<delete id="DeleteReply" parameterType="web.com.spring.reply.vo.ReplyVO">
 		delete from 
 			re_bbs 
 		where 
-			rno = #{rno}
+			rno = #{Rno}
 	</delete>
 </mapper>

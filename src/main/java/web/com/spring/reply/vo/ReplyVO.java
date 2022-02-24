@@ -13,12 +13,14 @@ import lombok.ToString;
 @Setter
 @Getter
 public class ReplyVO {
-	private int Bno;
-	private int Rno;
-	private String RnoWriter;
-	private String RnoContents;
+	
+	private Integer bno;
+	private Integer rno;
+	private String rnoWriter;
+	private String rnoContents;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime RnoDate;
+	private LocalDateTime rnoDate;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime RnoUpdate;
+	private LocalDateTime rnoUpdate;
 }

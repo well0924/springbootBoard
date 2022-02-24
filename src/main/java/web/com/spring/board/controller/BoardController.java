@@ -94,8 +94,11 @@ public class BoardController {
 	//선택삭제
 	@PostMapping("/delete")
 	public String selectDelete(HttpServletRequest req)throws Exception{
+		log.info("선택삭제");
 		String[] ajaxMsg = req.getParameterValues("valueArr");
+		log.info("????:"+ajaxMsg);
 		int size = ajaxMsg.length;
+		log.info("길이:"+size);
 		for(int i =0; i<size;i++) {
 			service.SelectDelete(ajaxMsg[i]);
 		}

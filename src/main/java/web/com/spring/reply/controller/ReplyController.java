@@ -1,5 +1,6 @@
 package web.com.spring.reply.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -36,21 +37,26 @@ public class ReplyController {
 	}	
 	//댓글 작성 기능 o.k
 	@PostMapping("/write")
-	public ResponseEntity<Integer>writeReply(@RequestBody ReplyVO vo)throws Exception{
-		int result = service.InsertReply(vo);
-		log.info("글삽입 여부:"+result);//1이면 정상
-		return result ==1 ?  new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<String>writeReply(@RequestBody ReplyVO vo)throws Exception,SQLException{
+		
+		try {
+			int result = service.InsertReply(vo);
+			log.info("글삽입 여부:"+result);//1이면 정상
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return   new ResponseEntity<>(HttpStatus.OK);
 	}
 	//댓글 수정 기능 o.k
 	@PutMapping("/{bno}/{rno}")
-	public ResponseEntity<Integer>updateReply(@RequestBody ReplyVO vo, @PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception{
+	public ResponseEntity<String>updateReply(@RequestBody ReplyVO vo, @PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
 		int result = service.ReplyUpdate(vo);
 		log.info("글수정여부?:"+result);//1이면 정상
 		return result ==1 ? new ResponseEntity<>(HttpStatus.OK):new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	//댓글 삭제 기능 o.k
 	@DeleteMapping("/{bno}/{rno}")
-	public ResponseEntity<Integer>deleteReply(@RequestBody ReplyVO vo,@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception{
+	public ResponseEntity<String>deleteReply(@RequestBody ReplyVO vo,@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
 		int result = service.DeleteReply(vo);
 		log.info("글삭제:"+result);//1이면 정상
 		return result ==1 ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.BAD_REQUEST);

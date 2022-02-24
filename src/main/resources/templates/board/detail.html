@@ -39,15 +39,15 @@
 <!-- 댓글 입력부분 -->
 <div class="card-body"> 
 	<form class="form-horizontal"> 
-		<div class="row"> 
+		<div class="row">
+			<div class="form-group col-sm-2"> 
+				<input class="form-control input-sm" id="newReplyWriter" type="text" name="rnoWriter" placeholder="작성자"> 
+			</div>  
 			<div class="form-group col-sm-8"> 
-				<input class="form-control input-sm" id="newReplyText" type="text" placeholder="댓글 입력..."> 
+				<input class="form-control input-sm" id="newReplyText" type="text" name="rnoContents" placeholder="댓글 입력..."> 
 			</div> 
 			<div class="form-group col-sm-2"> 
-				<input class="form-control input-sm" id="newReplyWriter" type="text" placeholder="작성자"> 
-			</div> 
-			<div class="form-group col-sm-2"> 
-				<button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn"> 
+				<button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn" onclick="replyinsert()"> 
 					<i class="fa fa-save"></i> 저장 
 				</button> 
 			</div> 
@@ -62,9 +62,9 @@
 			<button type="button" class="btn primary" data-widget="collapse"> 
 				<i class="fa fa-plus"></i> 
 			</button> 
-		</div> 
+		</div>
+		<div id="repliesDiv"> </div>  
 	</div> 
-	<div id="repliesDiv"> </div> 
 </div>
 
 </body>
@@ -132,7 +132,7 @@ function boardDelete(){
 $(document).ready(function(){
 	replylist();
 });
-
+//댓글목록
 function replylist(){
 	var boardId = $('#boardId').val();
 	
@@ -142,20 +142,17 @@ function replylist(){
 		dataType:'json'
 	}).done(function(rep){
 		var result ="";
-		if(rep.length<1){
-			result ="등록된 댓글이 없습니다.";
+		if(rep.length < 1){
+			result +='등록된 댓글이 없습니다.';
+			$("#repliesDiv").append(result);
 		}else{
-		
 			$.each(rep,function(idx,rep){
-				console.log(rep.rnoWriter);
-				console.log(rep.rno);
-				console.log(rep.RnoDate);
 				result +='<br/>';
 				result +='<Strong>작성자:'+rep.rnoWriter;
 				result +'</strong>';
 				result +='<p>글 내용:'+rep.rnoContents;
 				result +='<br/></p>'
-				result +='작성날짜:'+rep.RnoDate;
+				result +='작성날짜:'+rep.rnoDate;
 				result +='</br>';
 				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn"';
 				result +='data-rno='+rep.rno+'>'
@@ -170,6 +167,39 @@ function replylist(){
 			$("#repliesDiv").append(result);
 		};
 	});
+}
+//댓글 작성
+function replyinsert(){
+	//값 가져오기
+	var bno = $('#boardId').val();
+	var rnoWriter = $('#newReplyWriter').val();
+	var rnoContents = $('#newReplyText').val();
+	var repfom={
+				bno : bno,
+			 	rnoWriter : rnoWriter,
+			 	rnoContents : rnoContents
+			 };
+	console.log(repfom);
+	$.ajax({
+		url:'/reply/write',
+		type:'post',
+		data:JSON.stringify(repfom),
+		contentType:'application/json',
+	}).done(
+	function(resp){
+		alert('댓글삽입완료');
+		console.log(resp);
+		replylist();
+		$('#newReplyWriter').val('');
+		$('#newReplyText').val('');
+	}).fail(function(error,resp){
+		alert('댓글실패');
+		console.log(error);
+	});
+}
+//댓글 삭제
+function deleteReply(){
+	
 }
 </script>
 </html>
