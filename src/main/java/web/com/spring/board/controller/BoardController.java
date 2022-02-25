@@ -92,7 +92,7 @@ public class BoardController {
 	}
 	
 	//선택삭제
-	@PostMapping("/delete")
+	@PostMapping("/selectdelete")
 	public String selectDelete(HttpServletRequest req)throws Exception{
 		log.info("선택삭제");
 		String[] ajaxMsg = req.getParameterValues("valueArr");

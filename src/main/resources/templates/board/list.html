@@ -47,7 +47,7 @@ div#pagination.container{
 	  </thead>
 	  <tbody>
 	    <tr th:each="list:${boardList}">
-	     <td><input type="checkbox" name="RowCheck" value="${list.boardId}"></td>
+	     <td><input type="checkbox" name="RowCheck" th:value="${list.boardId}"></td>
 	     <td th:text="${list.boardId}"></td>
 	     <td>
 	   	    <a th:href="@{'/board/detailForm/'+${list.boardId}(page=${paging.cri.page},perPageNum=${paging.cri.perPageNum})}">
@@ -131,9 +131,12 @@ $(function(){
 			var url = "/board/delete";    // Controller로 보내고자 하는 URL (.dh부분은 자신이 설정한 값으로 변경해야됨)
 			var valueArr = new Array();
 		    var list = $("input[name='RowCheck']");
+		    console.log(list);
 		    for(var i = 0; i < list.length; i++){
 		        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
 		            valueArr.push(list[i].value);
+		            console.log(list[i]);
+		            console.log(valueArr);
 		        }
 		    }
 		    if (valueArr.length == 0){
@@ -142,20 +145,18 @@ $(function(){
 		    else{
 				var chk = confirm("정말 삭제하시겠습니까?");				 
 				$.ajax({
-				    url : "/board/delete",                    
+				    url : "/board/selectdelete",                    
 				    type : 'POST',                
-				    data : {valueArr : valueArr}
+				    data : {valueArr : valueArr},
+				    dataType:'josn'
 				}).done(function(jdata){
 					alert(valueArr);
-					if(jdata = 1) {
-                        alert("삭제 성공");
-                        location.replace("/board/list?"+"page="+[[${paging.cri.page}]]+"&perPageNum="+[[${paging.cri.perPageNum}]]+"&searchType="+$('#searchType').val()+"&keyword="+$('#keyword').val());
-                    }
-                    else{
-                        alert("삭제 실패");
-                    }
+                    alert("삭제 성공");
+                    console.log(jdata);
+                    location.replace("/board/list?"+"page="+[[${paging.cri.page}]]+"&perPageNum="+[[${paging.cri.perPageNum}]]+"&searchType="+$('#searchType').val()+"&keyword="+$('#keyword').val());
 				}).fail(function(error){
 					alert(error);
+					alert(valueArr);
 				});
 			}
 		}

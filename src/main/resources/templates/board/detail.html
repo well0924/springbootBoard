@@ -154,12 +154,10 @@ function replylist(){
 				result +='<br/></p>'
 				result +='작성날짜:'+rep.rnoDate;
 				result +='</br>';
-				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn"';
-				result +='data-rno='+rep.rno+'>'
+				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReply('+this.rno+',\''+this.rnoDate+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\',\''+this.bno+')">';
 				result +='댓글수정';
 				result +='</button>';
-				result +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn"';
-				result +='data-rno='+rep.rno+'>';
+				result +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply('+this.rno+')">';
 				result +='댓글삭제';
 				result +='</button>';
 				result +='<br/>'
@@ -179,7 +177,7 @@ function replyinsert(){
 			 	rnoWriter : rnoWriter,
 			 	rnoContents : rnoContents
 			 };
-	console.log(repfom);
+	
 	$.ajax({
 		url:'/reply/write',
 		type:'post',
@@ -198,8 +196,32 @@ function replyinsert(){
 	});
 }
 //댓글 삭제
-function deleteReply(){
+function deleteReply(rno){
+	var bno = $('#boardId').val();
 	
+	var deleteUrl = '/reply/'+bno+'/'+rno;
+	
+	$.ajax({
+		url:deleteUrl,
+		type:'delete'
+	}).done( function(resp){
+		alert('삭제완료');
+		replylist();
+		$('#newReplyWriter').val('');
+		$('#newReplyText').val('');
+	}).fail(function(fa){
+		alert(fa);
+	});
+	replylist();
+}
+
+//댓글 수정
+function updateReply(bno,rno){
+	$.ajax({
+		url:'/reply/'+bno+'/'+rno,
+		type:'put',
+		
+	})	
 }
 </script>
 </html>

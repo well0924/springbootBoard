@@ -56,7 +56,7 @@ public class ReplyController {
 	}
 	//댓글 삭제 기능 o.k
 	@DeleteMapping("/{bno}/{rno}")
-	public ResponseEntity<String>deleteReply(@RequestBody ReplyVO vo,@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
+	public ResponseEntity<String>deleteReply(ReplyVO vo,@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
 		int result = service.DeleteReply(vo);
 		log.info("글삭제:"+result);//1이면 정상
 		return result ==1 ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.BAD_REQUEST);
