@@ -30,35 +30,57 @@ public class ReplyController {
 	//댓글 목록(기능 o.k)
 	@GetMapping("/{bno}")
 	public ResponseEntity<List<ReplyVO>>replylist(@PathVariable("bno") int bno)throws Exception{
-		List<ReplyVO> list = null;
-		list = service.list(bno);
-		log.info("댓글 목록"+list);
-		return new ResponseEntity<>(list,HttpStatus.OK);
+		ResponseEntity<List<ReplyVO>> entity = null;
+		List<ReplyVO>list = service.list(bno);
+		try {
+			entity = new ResponseEntity<List<ReplyVO>>(list,HttpStatus.OK);
+			log.info("댓글 목록:"+list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity= new ResponseEntity<List<ReplyVO>>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}	
-	//댓글 작성 기능 o.k
+	//댓글 작성 (기능 o.k)
 	@PostMapping("/write")
 	public ResponseEntity<String>writeReply(@RequestBody ReplyVO vo)throws Exception,SQLException{
-		
+		ResponseEntity<String> entity = null;
 		try {
-			int result = service.InsertReply(vo);
+			int result=service.InsertReply(vo);
 			log.info("글삽입 여부:"+result);//1이면 정상
+			entity = new ResponseEntity<String>("Success",HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
+			entity = new ResponseEntity<String>("Bed",HttpStatus.BAD_REQUEST);
 		}
-		return   new ResponseEntity<>(HttpStatus.OK);
+		return entity;
 	}
 	//댓글 수정 기능 o.k
 	@PutMapping("/{bno}/{rno}")
 	public ResponseEntity<String>updateReply(@RequestBody ReplyVO vo, @PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
-		int result = service.ReplyUpdate(vo);
-		log.info("글수정여부?:"+result);//1이면 정상
-		return result ==1 ? new ResponseEntity<>(HttpStatus.OK):new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		ResponseEntity<String> entity = null;
+		try {
+			int result = service.ReplyUpdate(vo);
+			log.info("글수정여부?:"+result);
+			entity = new ResponseEntity<String>("Success",HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity =new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
-	//댓글 삭제 기능 o.k
+	//댓글 삭제 (기능 o.k)
 	@DeleteMapping("/{bno}/{rno}")
-	public ResponseEntity<String>deleteReply(ReplyVO vo,@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
-		int result = service.DeleteReply(vo);
-		log.info("글삭제:"+result);//1이면 정상
-		return result ==1 ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Integer>deleteReply(@PathVariable("bno")int bno,@PathVariable("rno")int rno)throws Exception,SQLException{
+		ResponseEntity<Integer> entity = null;
+		try {
+			int result = service.DeleteReply(rno);
+			log.info("글삭제:"+result);//1이면 정상
+			entity = new ResponseEntity<Integer>(HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity =new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return  entity;
 	}
 }

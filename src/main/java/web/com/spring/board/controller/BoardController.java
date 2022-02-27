@@ -27,11 +27,19 @@ public class BoardController {
 	
 	private BoardService service;
 	
-	@GetMapping("/")
+	//메인 페이지
+	@GetMapping("/main")
 	public ModelAndView main() {
 		log.info("main page");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main/index");
+		return mv;
+	}
+	//about페이지
+	@GetMapping("/about")
+	public ModelAndView AboutPage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/main/about");
 		return mv;
 	}
 	//글목록 화면
@@ -91,7 +99,7 @@ public class BoardController {
 		return mv;
 	}
 	
-	//선택삭제
+	//선택삭제(불안정)
 	@PostMapping("/selectdelete")
 	public String selectDelete(HttpServletRequest req)throws Exception{
 		log.info("선택삭제");

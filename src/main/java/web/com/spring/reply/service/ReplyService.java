@@ -14,11 +14,11 @@ public class ReplyService {
 	
 	private ReplyMapper mapper;
 	
-	//댓글 목록
+	//댓글 목록 o.k
 	public List<ReplyVO> list(int bno) throws Exception{
 		return mapper.list(bno);
 	};
-	//댓글  삽입
+	//댓글  삽입 o.k
 	public int InsertReply(ReplyVO vo)throws Exception{
 		return mapper.InsertReply(vo);
 	};
@@ -26,8 +26,8 @@ public class ReplyService {
 	public int ReplyUpdate(ReplyVO vo)throws Exception{
 		return mapper.ReplyUpdate(vo);
 	};
-	//댓글 삭제
-	public int DeleteReply(ReplyVO vo)throws Exception{
-	     return	mapper.DeleteReply(vo);
+	//댓글 삭제 o.k
+	public int DeleteReply(Integer rno)throws Exception{
+	     return	mapper.DeleteReply(rno);
 	};
 }

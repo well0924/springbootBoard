@@ -5,7 +5,7 @@
 	<sql id="paging">
 		LIMIT #{perPageNum}	 OFFSET #{pageStart}
 	</sql>
-	<!-- 검색기능 -->
+	<!-- 검색기능 o.k-->
 	<sql id="search">
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="searchType=='T'.toString() and keyword != null and keyword != '' ">
@@ -71,7 +71,7 @@
 		where 
 			board_id = #{boardId}
  	</update>
- 	<!-- 글 삭제-->
+ 	<!-- 글 삭제o.k-->
  	<delete id="boardDelete" parameterType="int">
  		delete from 
  			p_bbs

@@ -2,18 +2,14 @@ package web.com.spring;
 
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import web.com.spring.board.service.BoardService;
-import web.com.spring.board.vo.BoardVO;
 
 @SpringBootTest
 class SampleRestBoard4ApplicationTests {
 	
-	@Autowired
-	private BoardService mapper;
-	
+//	@Autowired
+//	private BoardService mapper;
+//	
 	@Test
 	void contextLoads() {
 	}
