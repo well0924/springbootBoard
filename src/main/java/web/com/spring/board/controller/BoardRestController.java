@@ -1,6 +1,5 @@
 package web.com.spring.board.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -31,32 +30,58 @@ public class BoardRestController {
 	//게시글 목록 c.o
 	@GetMapping("/list")
 	public ResponseEntity<List<BoardVO>>boardList(Criteria cri)throws Exception{
-		List<BoardVO>listboard = new ArrayList<>();
-		listboard = service.boardlist(cri);
-		return new ResponseEntity<>(listboard,HttpStatus.OK);
+		ResponseEntity<List<BoardVO>>entity = null;
+		List<BoardVO>listboard = service.boardlist(cri);
+		try {
+			entity = new ResponseEntity<List<BoardVO>>(listboard,HttpStatus.OK);
+			log.info("목록:"+listboard);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<BoardVO>>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 	//게시글 작성 c.o
 	@PostMapping(value="/board")
-	public ResponseEntity<String>boardwrite(@RequestBody BoardVO vo)throws Exception{
-		int result = service.boardInsert(vo);
-		log.info("글삭제여부?:"+result);
-		return result == 1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String>boardwrite( @RequestBody BoardVO vo)throws Exception{
+		ResponseEntity<String> entity = null;
+		try {
+			int result = service.boardInsert(vo);
+			log.info("글삭제여부?:"+result);
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	//게시글 수정 c.o
 	@PutMapping("/board/{id}")
 	public ResponseEntity<String>boardUpdate(@PathVariable("id") Integer boardId,@RequestBody BoardVO vo)throws Exception{
-		int result = service.boardUpdate(vo);
-		log.info("글삭제여부?:"+result);
-		return result ==1 ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		ResponseEntity<String>entity = null;
+		try {
+			int result = service.boardUpdate(vo);
+			log.info("글삭제여부?:"+result);
+			entity = new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return entity;
 	}
 	//게시글 삭제 c.o
 	@DeleteMapping("/board/{id}")
 	public ResponseEntity<String>boardDelete(@PathVariable("id") Integer boardId)throws Exception{
-		int result = service.boardDelete(boardId);
-		log.info("글삭제여부?:"+result);
-		return new ResponseEntity<>(HttpStatus.OK);
+		ResponseEntity<String> entity = null;
+		try {
+			int result = service.boardDelete(boardId);
+			log.info("글삭제여부?:"+result);
+			entity = new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return entity;
 	}
-	
-	
 }
