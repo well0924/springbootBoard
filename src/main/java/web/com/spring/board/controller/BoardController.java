@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -101,9 +102,10 @@ public class BoardController {
 	
 	//선택삭제(불안정)
 	@PostMapping("/selectdelete")
-	public String selectDelete(HttpServletRequest req)throws Exception{
+	@ResponseBody
+	public String selectDelete(HttpServletRequest req,String[]ajaxMsg)throws Exception{
 		log.info("선택삭제");
-		String[] ajaxMsg = req.getParameterValues("valueArr");
+		ajaxMsg = req.getParameterValues("valueArr");
 		log.info("????:"+ajaxMsg);
 		int size = ajaxMsg.length;
 		log.info("길이:"+size);
