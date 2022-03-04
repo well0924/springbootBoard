@@ -5,9 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,17 +103,11 @@ public class BoardController {
 	}
 	
 	//선택삭제(불안정)
-	@PostMapping("/selectdelete")
+	@DeleteMapping("/selectdelete")
 	@ResponseBody
-	public String selectDelete(HttpServletRequest req,String[]ajaxMsg)throws Exception{
-		log.info("선택삭제");
-		ajaxMsg = req.getParameterValues("valueArr");
-		log.info("????:"+ajaxMsg);
-		int size = ajaxMsg.length;
-		log.info("길이:"+size);
-		for(int i =0; i<size;i++) {
-			service.SelectDelete(ajaxMsg[i]);
-		}
-		return "redirect:/board/list";
+	public List<String> selectDelete(@RequestBody List<String> boardIdArray)throws Exception{
+		log.info("선택삭제",boardIdArray);
+		service.SelectDelete(boardIdArray);
+		return boardIdArray;
 	}
 }
