@@ -30,7 +30,9 @@
   <div class="mb-3">
     <label for="file" class="col-sm-2 col-form-label"><strong>파일</strong></label>
     <div class="col-sm-10">
-       <span th:text="${detail.originfilename}"></span>
+    	<a  th:href="@{/api/download(boardId=${detail.boardId})}">
+    		<span th:text="${detail.originfilename}"></span>
+    	</a>
     </div>
   </div>
   <div class="mb-3">
@@ -213,18 +215,18 @@ function deleteReply(rno){
 	});
 }
 
-//수정 화면(??)
+//수정 화면(화면이 안나옴?)
 function updateReplyView(rno,rnoWriter,rnoContents,rnoDate){
 	console.log(rno);
 	console.log(bno);
 	var sult =" ";
-	sult +='<Strong>작성자:'+rnoWriter;
+	sult +='<Strong>작성자:'+this.rnoWriter;
 	sult +'</strong>';
-	sult +='<p>글 내용:'+rnoContents;
+	sult +='<p>글 내용:'+this.rnoContents;
 	sult +='<br/></p>'
-	sult +='작성날짜:'+rnoDate;
+	sult +='작성날짜:'+this.rnoDate;
 	sult +='</br>';
-	sult +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReply('+rno+'\',\''+rnoContents+'\',\''+rnoWriter+'\')">';
+	sult +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReply('+this.rno+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\')">';
 	sult +='댓글수정';
 	sult +='</button>';
 	sult +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply()">';

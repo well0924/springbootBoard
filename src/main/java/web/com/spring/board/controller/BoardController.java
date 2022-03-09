@@ -82,7 +82,7 @@ public class BoardController {
 	
 	//글 조회화면
 	@GetMapping("/detailForm/{boardid}")
-	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId,Criteria cri)throws Exception{
+	public ModelAndView boardReForm(@PathVariable("boardid") Integer boardId, Criteria cri)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		// 페이징 객체(검색)
 		pageinfo paging = new pageinfo();

@@ -50,7 +50,7 @@ public class BoardDto {
 		@Setter
 		private String storedFileName;
 		@Setter
-		private String filePath;
+		private String filepath;
 		
 	}
 	
@@ -69,7 +69,7 @@ public class BoardDto {
 		@Setter
 		private String storedfilename;
 		@Setter
-		private String filePath;
+		private String filepath;
 		private Integer HITCOUNT;
 		@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 		private LocalDateTime  regDate;

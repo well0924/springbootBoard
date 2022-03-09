@@ -1,7 +1,18 @@
 package web.com.spring.board.controller;
 
+import java.io.File;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
@@ -93,5 +106,42 @@ public class BoardRestController {
 		log.info("선택삭제",boardIdArray);
 		service.SelectDelete(boardIdArray);
 		return boardIdArray;
+	}
+	
+	//다운로드 기능
+	@GetMapping("/download")
+	public ResponseEntity<Resource> filedown(@RequestParam Integer boardId)throws Exception{
+		
+		HttpHeaders header = new HttpHeaders();
+		Resource res = null;
+		log.info("다운로드 기능");
+		try {
+			BoardDto.Result vo = service.detailBoard(boardId);
+			String filepath = vo.getFilepath();
+			String fullpath = filepath + vo.getStoredfilename();
+			String originfilename = vo.getOriginfilename();
+			File targetFile = new File(fullpath);
+			
+			if(targetFile.exists()) {
+				String mimeType = Files.probeContentType(Paths.get(targetFile.getAbsolutePath()));
+				
+				if(mimeType == null) {
+					mimeType ="application/octet-stream";
+				}
+				
+				res = new UrlResource(targetFile.toURI());
+				
+				String encodingFileName = URLEncoder.encode(originfilename, "UTF-8").replace("+","%20");
+				
+				header.set("Content-Disposition", "attachment;filename="+encodingFileName + ";filename*=UTF-8''" + encodingFileName);
+				header.setCacheControl("no-cache");
+				header.setContentType(MediaType.parseMediaType(mimeType));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		log.info("다운로드 기능완료");
+		return new ResponseEntity<Resource>(res,header,HttpStatus.OK);
 	}
 }

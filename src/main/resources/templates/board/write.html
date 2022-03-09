@@ -100,17 +100,13 @@ function boardwriter(){
 			cache:false,
 			enctype: 'multipart/form-data'
 			
-		}).done(function(data,textStatus,xhr){
+		}).done(function(data){
 			alert("삽입완료");
 			console.log(data);
-			console.log(xhr);
-		}).fail(function(data,textStatus,xhr){
-			console.log(xhr);
-			console.log(frmDate);
-			console.log(data);
-		});
-		location.href="/board/list";
+		})
 	}
+	alert("삽입완료");
+	location.href="/board/list";
 }	
 </script>
 
