@@ -12,7 +12,7 @@ public interface ReplyMapper {
 	public List<ReplyVO> list(int bno) throws Exception;
 	//댓글  삽입 o.k
 	public int InsertReply(ReplyVO vo)throws Exception;
-	//댓글 수정 
+	//댓글 수정 ->수정창이 나오지 않음....
 	public int ReplyUpdate(ReplyVO vo)throws Exception;
 	//댓글 삭제 o.k
 	public int DeleteReply(Integer rno)throws Exception;

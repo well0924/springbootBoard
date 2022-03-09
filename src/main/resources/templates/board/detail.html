@@ -28,6 +28,12 @@
   	<textarea class="form-control"  id="boardContents" name="boardContents">[[${detail.boardContents}]]</textarea>
   </div>
   <div class="mb-3">
+    <label for="file" class="col-sm-2 col-form-label"><strong>파일</strong></label>
+    <div class="col-sm-10">
+       <span th:text="${detail.originfilename}"></span>
+    </div>
+  </div>
+  <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">작성일자</label>
     <input type="text" class="form-control" id="exampleInputPassword1" name="regDate" readonly="readonly" th:value="${detail.regDate}">
   </div>
@@ -67,6 +73,7 @@
 			</button> 
 		</div>
 		<div id="noneReply"></div>
+		<div id="updateReply"></div>
 		<div id="repliesDiv"> </div>  
 	</div> 
 </div>
@@ -83,10 +90,12 @@ function backlist(){
 //글 수정 
 function boardupdate(){
 	var boardTitle = $('#boardTitle').val();
+	var boardWriter= $('#boardWriter').val();
 	var boardContents = $('#boardContents').val();
 	var boardId =$('#boardId').val();
 	var frmdata ={
 			boardTitle,
+			boardWriter,
 			boardContents,
 			boardId
 		}
@@ -204,7 +213,7 @@ function deleteReply(rno){
 	});
 }
 
-//수정 화면
+//수정 화면(??)
 function updateReplyView(rno,rnoWriter,rnoContents,rnoDate){
 	console.log(rno);
 	console.log(bno);
@@ -222,7 +231,7 @@ function updateReplyView(rno,rnoWriter,rnoContents,rnoDate){
 	sult +='댓글삭제';
 	sult +='</button>';
 	sult +='<br/>';
-	$("#repliesDiv").html(sult);
+	$("#updateReply").html(sult);
 }
 </script>
 </html>

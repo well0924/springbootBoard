@@ -2,33 +2,30 @@ package web.com.spring.board.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.board.service.BoardService;
+import web.com.spring.board.vo.BoardDto;
 import web.com.spring.board.vo.BoardVO;
 import web.com.spring.common.Criteria;
 import web.com.spring.common.pageinfo;
 
 @Slf4j
 @Controller
+@RestController
 @RequestMapping("/board/*")
 @AllArgsConstructor
 public class BoardController {
 	
-	private BoardService service;
+	private final BoardService service;
 	
 	//메인 페이지
 	@GetMapping("/main")
@@ -91,7 +88,8 @@ public class BoardController {
 		pageinfo paging = new pageinfo();
 		paging.setCri(cri);
 				
-		BoardVO vo =null;
+		BoardDto.Result vo =null;
+		//조회기능
 		vo = service.detailBoard(boardId);
 		//조회수 증가 기능 c.o
 		service.countup(boardId);
@@ -102,12 +100,4 @@ public class BoardController {
 		return mv;
 	}
 	
-	//선택삭제(불안정)
-	@DeleteMapping("/selectdelete")
-	@ResponseBody
-	public List<String> selectDelete(@RequestBody List<String> boardIdArray)throws Exception{
-		log.info("선택삭제",boardIdArray);
-		service.SelectDelete(boardIdArray);
-		return boardIdArray;
-	}
 }

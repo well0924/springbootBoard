@@ -66,7 +66,7 @@ layout:decorator="layout/layout">
 		   		</a>
 		   	</li>
 		    <li class="page-item" th:if="${paging.next} == true and ${paging.endPage > 0}">
-		    	<a class="page-link" th:href="@{/page/list(page=${paging.endPage}+1, perPageNum=${paging.cri.perPageNum})}">Next</a>
+		    	<a class="page-link" th:href="@{/board/list(page=${paging.endPage}+1, perPageNum=${paging.cri.perPageNum})}">Next</a>
 		   	</li>
 		  </ul>
 		</nav>
@@ -164,7 +164,7 @@ function selectDelete(){
 	
 	if(confirmAlert){
 		$.ajax({
-			url:'/board/selectdelete',
+			url:'/api/selectdelete',
 			type:'delete',
 			dataType:'json',
 			data:JSON.stringify(boardIdArray),

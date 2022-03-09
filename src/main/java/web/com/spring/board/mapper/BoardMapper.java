@@ -1,9 +1,11 @@
 package web.com.spring.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import web.com.spring.board.vo.BoardDto;
 import web.com.spring.board.vo.BoardVO;
 import web.com.spring.common.Criteria;
 
@@ -11,13 +13,13 @@ import web.com.spring.common.Criteria;
 public interface BoardMapper {
 	
 	//게시글 작성 o.k
-	public int boardInsert(BoardVO vo) throws Exception;
+	public int boardInsert(BoardDto.Request vo) throws Exception;
 	//게시글 목록 o.k
 	public List<BoardVO> boardlist(Criteria cri) throws Exception; 
 	//게시글 목록 조회 o.k
-	public BoardVO detailBoard(Integer boardId)throws Exception;
+	public BoardDto.Result detailBoard(Integer boardId)throws Exception;
 	//게시글 수정 o.k
-	public int boardUpdate(BoardVO vo)throws Exception;
+	public int boardUpdate(BoardDto.UpdateRequest vo)throws Exception;
 	//게시글 삭제 o.k
 	public int boardDelete(Integer boardId)throws Exception;
 	//게시글 선택 삭제 

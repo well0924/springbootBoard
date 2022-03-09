@@ -29,12 +29,10 @@
 		</trim>
 	</sql>
 	<!-- 게시글 작성o.k-->
-	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardVO">
+	<insert id="boardInsert" parameterType="web.com.spring.board.vo.BoardDto$Request">
 		insert into 
-			p_bbs(board_id,board_title,board_writer,board_contents,reg_date,update_date,HITCOUNT) 
-		values(
-				#{boardId},#{boardTitle},#{boardWriter},#{boardContents},now(),null,0
-			)
+			p_bbs(board_title,board_writer,board_contents,reg_date,update_date,HITCOUNT,originfilename,storedfilename,filepath) 
+		values( #{boardTitle},#{boardWriter},#{boardContents},now(),null,0,#{originfilename},#{storedfilename},#{filepath})
 	</insert>
 	<!-- 게시글 목록 o.k-->
 	<select id="boardlist" resultType="web.com.spring.board.vo.BoardVO">
@@ -49,11 +47,11 @@
 		<include refid="paging"/>		
 	</select>
 	<!-- 글 조회 o.k-->
-	<select id="detailBoard" parameterType="int" resultType="BoardVO">
+	<select id="detailBoard" parameterType="int" resultType="web.com.spring.board.vo.BoardDto$Result">
 		select * from p_bbs where board_id = #{boardId}
 	</select>
 	<!-- 글 수정 o.k-->
-	<update id="boardUpdate" parameterType="web.com.spring.board.vo.BoardVO">
+	<update id="boardUpdate" parameterType="web.com.spring.board.vo.BoardDto$UpdateRequest">
 		update 
 			p_bbs 
 		<set>
@@ -66,6 +64,15 @@
 			<if test="boardContents neq null and boardContents neq ''">
 				board_contents =#{boardContents},
 			</if>
+		 	<if test="originfilename neq null and originfilename neq ''">
+  	  	    	,originfilename = #{originfilename}
+  	  		</if>
+  	  	 	<if test="storedfilename neq null and storedfilename neq ''">
+  	  	    	,storedfilename = #{storedfilename}
+  	  		</if>
+  	  	 	<if test="filepath neq null and filepath neq ''">
+  	  	    	,filepath = #{filepath}
+  	  		</if>
 			update_date = now()
 		</set>
 		where 

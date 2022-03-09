@@ -24,16 +24,22 @@ layout:decorator="layout/layout">
 <form id ="frmdate">
         <div class="form-group">
               <label for="exampleFormControlInput1">제목</label>
-            <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 작성해주세요.">
+            <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 작성해주세요." required="required">
           </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">작성자</label>
-            <input type="text" class="form-control" id="boardWriter" name="boardWriter" placeholder="이름을 적어주세요.">
+            <input type="text" class="form-control" id="boardWriter" name="boardWriter" placeholder="이름을 적어주세요." required="required">
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">내용</label>
-            <textarea class="form-control summernote" id="boardContents" name="boardContents" rows="10"></textarea>
+            <textarea class="form-control summernote" id="boardContents" name="boardContents" rows="10" required="required"></textarea>
           </div>
+          <div class="form-group row">
+    		<label for="file" class="col-sm-2 col-form-label"><strong>파일</strong></label>
+    			<div class="col-sm-10">
+        			<input type="file" name="file" id="inputFile" multiple="multiple">
+    			</div>
+		  </div>    
         <button type="button" class="btn btn-info" onclick="boardwriter()">등록하기</button>
         <button type="button" class="btn btn-secondary" onclick="backlist()">목록으로</button>
     </form>
@@ -44,35 +50,67 @@ layout:decorator="layout/layout">
 <th:block th:replace="fragment/footer :: footerFragment"></th:block>
 </body>
 <script type="text/javascript"th:inline="javascript">
+//유효성 검사
+function validate(){
+	var boardTitle = $('#boardTitle').val();
+	var boardWriter = $('#boardWriter').val();
+	var boardContents = $('#boardContents').val();
+	
+	if($.trim(boardTitle).length==0){
+		alert("제목을 입력해주세요.");
+		$('#boardTitle').focus();
+		return false;
+	}
+	
+	if($.trim(boardWriter).length==0){
+		alert("작성자를 입력해주세요.");
+		$('#boardWriter').focus();
+		return false;
+	}
+	
+	if($.trim(boardContents).length==0){
+		alert("내용을 입력해주세요.");
+		$('#boardContents').focus();
+		return false;
+	}
+	return true;
+}
 //목록 가기
 function backlist(){
 	location.href='/board/list';
 }
+
 //글 작성 ajax
 function boardwriter(){
 	var boardTitle = $('#boardTitle').val();
 	var boardWriter = $('#boardWriter').val();
 	var boardContents = $('#boardContents').val();
 	
-	var frmdata ={
-			boardTitle,
-			boardWriter,
-			boardContents}
-	
-	$.ajax({
-		url:'/api/board',
-		type:'POST',
-		data:JSON.stringify(frmdata),
-		contentType:'application/json'
-	}).done(function(data,textStatus,xhr){
-		console.log(xhr);
-	}).fail(function(data,textStatus,xhr){
-		console.log(xhr);
-	}).always(function(data,textStatus,xhr){
-		console.log(xhr);
-	});
-		
-	location.href="/board/list";
+	if(validate()){	
+		const formdate = $('#frmdate');
+		var frmDate = new FormData(formdate[0]);
+		console.log(frmDate);
+		$.ajax({
+			url:'/api/board',
+			type:'POST',
+			dataType:'json',
+			data:frmDate,
+			processData: false,
+			contentType : false,
+			cache:false,
+			enctype: 'multipart/form-data'
+			
+		}).done(function(data,textStatus,xhr){
+			alert("삽입완료");
+			console.log(data);
+			console.log(xhr);
+		}).fail(function(data,textStatus,xhr){
+			console.log(xhr);
+			console.log(frmDate);
+			console.log(data);
+		});
+		location.href="/board/list";
+	}
 }	
 </script>
 
