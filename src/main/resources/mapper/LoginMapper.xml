@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.com.spring.login.mapper.LoginMapper">
+	<!-- 가입하기 -->
+	<insert id="join">
+		insert into p_user
+			(userid,userpw,username,userphone,useremail,useraddr1,useraddr2,useraddr3,userdate,userupdate)
+		values
+			(#{userid},#{userpw},#{username},#{userphone},#{useremail},#{useraddr1},#{useraddr2},#{useraddr3},now(),null)
+	</insert>
+	<!-- 로그인 -->
+	<select id="loginproc" parameterType="LoginVO">
+		select * from 
+			p_user
+		where 
+			userid = #{userid} 
+				and 
+			userpw = #{userpw}		
+	</select>
+	<!-- 아이디중복체크 -->
+	<select id="IdCheck" parameterType="int">
+		select userid from p_user where userid = #{userid}
+	</select>
+	<!-- 회원목록 -->
+	<select id="memberlist" resultType="LoginVO">
+		select * from p_user
+	</select>
+	<!-- 회원수정 -->
+	<update id="memberUpdate" parameterType="int">
+		update 
+			p_user
+		set
+			userid = #{userid},
+			username = #{username},
+			useremail = #{useremail},
+			userphone = #{userphone},
+			useraddr1 = #{useraddr1},
+			useraddr2 = #{useraddr2},
+			useraddr3 = #{useraddr3},
+			userupdate = now()
+		where
+			userid = #{userid}		 
+	</update>
+	<!--  회원삭제 -->
+	<delete id="memberDelete" parameterType="String">
+		delete from p_user where userid = #{userid}
+	</delete>
+</mapper>

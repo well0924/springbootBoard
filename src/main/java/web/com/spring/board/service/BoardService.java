@@ -38,12 +38,12 @@ public class BoardService {
 		String originfilename = "";
 		String ext = "";
 		String storedfilename="";
-		
+		//파일이 첨부되었으면.
 		if(!file.isEmpty()) {
 			originfilename = file.getOriginalFilename();
 			ext = originfilename.substring(originfilename.lastIndexOf(".")+1);
 			storedfilename = "file"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))+"."+ext;
-			
+			//파일을 만들기.
 			this.createFile(file, originfilename, storedfilename);
 		}
 		
@@ -58,7 +58,29 @@ public class BoardService {
 	};
 	//게시글 수정
 	public int boardUpdate(BoardDto.UpdateRequest vo,Integer boardId)throws Exception{
+		
 		BoardDto.Result detail = mapper.detailBoard(boardId);
+		
+		String fullpath = detail.getFilepath()+ detail.getStoredfilename();
+		File file = new File(fullpath);
+		MultipartFile newfile = vo.getFile();
+		if(!newfile.isEmpty()) {
+			if(file.exists()) {
+				file.delete();
+			}
+			String originfilename ="";
+			String ext = "";
+			String storedfilename = "";
+			
+			originfilename = newfile.getOriginalFilename();
+			ext = originfilename.substring(originfilename.lastIndexOf(".")+1);
+			storedfilename = "file"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			this.createFile(newfile, originfilename, storedfilename);
+			
+			vo.setOriginFileName(originfilename);
+			vo.setStoredFileName(storedfilename);
+			vo.setFilepath(filepath);
+		}
 		return mapper.boardUpdate(vo);
 	};
 	//게시글 선택삭제
@@ -67,8 +89,15 @@ public class BoardService {
 			mapper.SelectDelte(boardIdArray.get(i));
 		}
 	}
-	//게시글 수정
+	//게시글 삭제
 	public int boardDelete(Integer boardId)throws Exception{
+		BoardDto.Result detail = mapper.detailBoard(boardId);
+		String fullpath = detail.getFilepath()+detail.getStoredfilename();
+		File file = new File(fullpath);
+		
+		if(file.exists()) {
+			file.delete();
+		}
 		return mapper.boardDelete(boardId);
 	};
 	//조회수 증가
@@ -79,7 +108,7 @@ public class BoardService {
 	public int countsum(Criteria cri)throws Exception{
 		return mapper.countsum(cri);
 	};
-	
+	//파일 만들기.
 	private void createFile(MultipartFile file, String originfilename,String storedfilename)throws Exception{
 		String fullpath = "";
 		

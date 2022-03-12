@@ -13,16 +13,16 @@ import lombok.ToString;
 @ToString
 public class LoginVO {
 	
-	private String userId;
-	private String userPw;
-	private String userName;
-	private String userPhone;
-	private String userEmail;
-	private String userAddr1;
-	private String userAddr2;
-	private String userAddr3;
+	private String userid;
+	private String userpw;
+	private String username;
+	private String userphone;
+	private String useremail;
+	private String useraddr1;
+	private String useraddr2;
+	private String useraddr3;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime userDate;
+	private LocalDateTime userdate;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime userUpdate;
+	private LocalDateTime userupdate;
 }
