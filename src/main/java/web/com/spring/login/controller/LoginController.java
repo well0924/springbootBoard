@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import web.com.spring.login.service.LoginService;
+import web.com.spring.login.vo.LoginDto;
 import web.com.spring.login.vo.LoginVO;
 
 @Slf4j
@@ -45,7 +45,7 @@ public class LoginController {
 		return mv;
 	}
 	
-	//회원가입화면
+	//회원가입 페이지
 	@GetMapping("/join")
 	public ModelAndView joinPage() {
 		ModelAndView mv = new ModelAndView();
@@ -62,9 +62,10 @@ public class LoginController {
 		return mv;
 	}
 	//아이디 비밀번호 찾기 기능
+	
 	//회원중복 기능
-	@PostMapping("/idCheck")
 	@ResponseBody
+	@PostMapping("/idCheck")
 	public Map<Object,Object>idCheck(@RequestBody String userid)throws Exception{
 		Map<Object,Object>result = new HashMap<>();
 		log.info("아이디 중복체크기능");
@@ -96,7 +97,7 @@ public class LoginController {
 	
 	//로그인기능
 	@PostMapping("/loginproc")
-	public String loginProc(LoginVO vo,RedirectAttributes redirect, HttpServletRequest req)throws Exception{
+	public String loginProc(LoginDto vo,RedirectAttributes redirect, HttpServletRequest req)throws Exception{
 		HttpSession session = req.getSession();
 		LoginVO login = service.loginproc(vo);
 		
@@ -112,11 +113,21 @@ public class LoginController {
 		}else{
 			session.setAttribute("login", null);
 			redirect.addFlashAttribute("loginfail",false);
-			return "redirect:/login/page";
+			return "redirect:/login/loginpage";
 		}
+	}
+	//로그아웃 기능
+	@GetMapping("/logoutproc")
+	public String logoutProc(HttpServletRequest req)throws Exception{
+		HttpSession session = req.getSession();
+		if(session.getAttribute("login")!=null) {
+			session.removeAttribute("login");
+		}
+		return "login/loginpage";
 	}
 	
 	//회원목록 출력하기
+	@ResponseBody
 	@GetMapping("/memberlist")
 	public List<LoginVO>memberlist()throws Exception{
 		log.info("회원목록");
@@ -130,6 +141,7 @@ public class LoginController {
 		return member;
 	}
 	//회원수정
+	
 	//회원삭제 및 탈퇴
 	
 }

@@ -45,4 +45,30 @@
 	<delete id="memberDelete" parameterType="String">
 		delete from p_user where userid = #{userid}
 	</delete>
+	<!-- 아이디 찾기 -->
+	<select id="searchId" resultType="LoginVO">
+		select userid from p_user where username = #{username} and userphone = #{userphone}
+	</select>
+	<!-- 비밀번호 찾기 -->
+	<select id="searchPw" resultType="LoginVO">
+		select userpw from p_user where userid = #{userid}
+	</select>
+	<!-- 시큐리티 권한로그인 -->
+	<select id="getuser" resultType="LoginVO">
+		select 
+		     u.userid,
+			 u.userpw,
+			 u.username,
+			 u.userphone,
+			 u.useremail,
+			 u.useraddr1,
+			 u.useraddr2,
+			 u.useraddr3,
+			 r.roleid as userlevel,
+			 r.rolename
+		from 
+     		p_user u INNER JOIN p_role r ON  u.userlevel = r.roleid
+		WHERE 
+   			u.userid = #{userid};
+	</select>
 </mapper>
