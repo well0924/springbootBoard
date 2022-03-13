@@ -111,9 +111,7 @@ function boardupdate(){
 		alert('success');
 	}).fail(function(data,textStatus,xhr){
 		alert('fail');
-	}).always(function(data,textStatus,xhr){
-		alert('???');
-	});
+	})
 	location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
 }
 //글 삭제
@@ -160,10 +158,10 @@ function replylist(){
 				result +='<br/></p>'
 				result +='작성날짜:'+this.rnoDate;
 				result +='</br>';
-				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReplyView('+this.rno+',\''+this.rnoDate+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\,'+this.bno+')">';
-				result +='댓글수정';
-				result +='</button>';
-				result +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply('+this.rno+')">';
+// 				result +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReplyView('+this.rno+',\''+this.rnoDate+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\,'+this.bno+')">';
+// 				result +='댓글수정';
+// 				result +='</button>';
+// 				result +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply('+this.rno+')">';
 				result +='댓글삭제';
 				result +='</button>';
 				result +='<br/>'
@@ -216,24 +214,24 @@ function deleteReply(rno){
 }
 
 //수정 화면(화면이 안나옴?)
-function updateReplyView(rno,rnoWriter,rnoContents,rnoDate){
-	console.log(rno);
-	console.log(bno);
-	var sult =" ";
-	sult +='<Strong>작성자:'+this.rnoWriter;
-	sult +'</strong>';
-	sult +='<p>글 내용:'+this.rnoContents;
-	sult +='<br/></p>'
-	sult +='작성날짜:'+this.rnoDate;
-	sult +='</br>';
-	sult +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReply('+this.rno+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\')">';
-	sult +='댓글수정';
-	sult +='</button>';
-	sult +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply()">';
-	sult +='댓글삭제';
-	sult +='</button>';
-	sult +='<br/>';
-	$("#updateReply").html(sult);
-}
+// function updateReplyView(rno,rnoWriter,rnoContents,rnoDate){
+// 	console.log(rno);
+// 	console.log(bno);
+// 	var sult =" ";
+// 	sult +='<Strong>작성자:'+this.rnoWriter;
+// 	sult +'</strong>';
+// 	sult +='<p>글 내용:'+this.rnoContents;
+// 	sult +='<br/></p>'
+// 	sult +='작성날짜:'+this.rnoDate;
+// 	sult +='</br>';
+// 	sult +='<button type="button" class="btn btn-outline-success" id ="replyupdateBtn" onclick="updateReply('+this.rno+'\',\''+this.rnoContents+'\',\''+this.rnoWriter+'\')">';
+// 	sult +='댓글수정';
+// 	sult +='</button>';
+// 	sult +='<button type="button" class="btn btn-outline-success" id ="replydeleteBtn" onclick="deleteReply()">';
+// 	sult +='댓글삭제';
+// 	sult +='</button>';
+// 	sult +='<br/>';
+// 	$("#updateReply").html(sult);
+// }
 </script>
 </html>

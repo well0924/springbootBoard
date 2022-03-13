@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import web.com.spring.login.mapper.LoginMapper;
-import web.com.spring.login.vo.LoginDto;
 import web.com.spring.login.vo.LoginVO;
 
 @Service
@@ -14,19 +13,19 @@ public class LoginService{
 	
 	private LoginMapper mapper;
 	
-	//회원가입
+	//회원가입 o.k
 	public void join(LoginVO vo)throws Exception{
 		mapper.join(vo);
 	};
 	//로그인,로그아웃
-	public LoginVO loginproc(LoginDto vo)throws Exception{
+	public LoginVO loginproc(LoginVO vo)throws Exception{
 		return mapper.loginproc(vo);
 	};
-	//회원중복체크
+	//회원중복체크 o.k
 	public int IdCheck(String userid)throws Exception{
 		return mapper.IdCheck(userid);
 	};
-	//회원목록
+	//회원목록 o.k
 	public List<LoginVO>memberlist()throws Exception{
 		return mapper.memberlist();
 	};

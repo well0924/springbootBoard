@@ -21,6 +21,7 @@ public class LoginVO {
 	private String useraddr1;
 	private String useraddr2;
 	private String useraddr3;
+	private String rolename;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime userdate;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

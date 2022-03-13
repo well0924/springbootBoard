@@ -20,7 +20,7 @@ public interface BoardMapper {
 	public int boardUpdate(BoardDto.UpdateRequest vo)throws Exception;
 	//게시글 삭제 o.k
 	public int boardDelete(Integer boardId)throws Exception;
-	//게시글 선택 삭제 
+	//게시글 선택 삭제 o.k
 	public int SelectDelte(String boardId)throws Exception;
 	//조회수 증가 o.k
 	public void countup(Integer boardId)throws Exception;
