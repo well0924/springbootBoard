@@ -25,18 +25,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 		.cors().disable()
 		.csrf().disable();//기본 로그인 폼 해제
-		http
-		.authorizeHttpRequests()
-		.antMatchers("/login/*")
-		.permitAll().anyRequest().authenticated()
-		.and()
-		.formLogin()
-		.loginPage("/login/page")
-		.successForwardUrl("/board/list")
-		.and()
-		.logout()
-		.invalidateHttpSession(true)
-		.clearAuthentication(true);
+//		http
+//		.authorizeHttpRequests()
+//		.antMatchers("/login/*","/reply/*","/api/*","/board/*")
+//		.permitAll()
+//		.anyRequest().authenticated()
+//		.and()
+//		.formLogin()
+//		.loginPage("/login/page")
+//		.loginProcessingUrl("/login/proc")
+//		.successForwardUrl("/board/list")
+//		.and()
+//		.logout()
+//		.invalidateHttpSession(true)
+//		.clearAuthentication(true);
 	}
 	
 	@Bean

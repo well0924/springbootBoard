@@ -14,8 +14,8 @@
 			p_user
 		where 
 			userid = #{userid} 
-				and 
-			userpw = #{userpw}		
+<!-- 				and  -->
+<!-- 			userpw = #{userpw}		 -->
 	</select>
 	<!-- 아이디중복체크o.k -->
 	<select id="IdCheck" parameterType="String" resultType="int">

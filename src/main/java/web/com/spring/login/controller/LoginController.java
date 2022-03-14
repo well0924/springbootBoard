@@ -123,6 +123,7 @@ public class LoginController {
 		
 		return num;	
 	}
+	
 	//회원가입기능 o.k
 	@PostMapping("/joinproc")
 	public String loginProc(LoginVO vo)throws Exception{
@@ -145,18 +146,22 @@ public class LoginController {
 	public String loginProc(LoginVO vo, RedirectAttributes redirect, HttpServletRequest req)throws Exception{
 		HttpSession session = req.getSession();
 		LoginVO login = service.loginproc(vo);
+		log.info("로그인 기능");
 		
 		String userpw = "";
 		String encodepw = "";
 		
 		userpw = vo.getUserpw();
 		encodepw = login.getUserpw();
-		System.out.println(userpw+"/"+encodepw);
+		
+		log.info(encodepw);
+		
 		boolean matcher = encoder.matches(userpw, encodepw);
-		System.out.println(matcher);
+		
 		if(login != null && matcher ==true) {
 			session.setAttribute("login", login);
-			return "/board/list";
+			System.out.println(login);
+			return "/login/successpage";
 		}else{
 			session.setAttribute("login", null);
 			redirect.addFlashAttribute("loginfail",false);
