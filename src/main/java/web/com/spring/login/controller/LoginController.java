@@ -131,9 +131,9 @@ public class LoginController {
 		String userpw = "";
 		String encode = "";
 		
-		userpw = vo.getUserpw();
+		userpw = vo.getUserPw();
 		encode = encoder.encode(userpw);
-		vo.setUserpw(encode);
+		vo.setUserPw(encode);
 		System.out.println(userpw);
 		System.out.println(encode);
 		service.join(vo);
@@ -151,8 +151,8 @@ public class LoginController {
 		String userpw = "";
 		String encodepw = "";
 		
-		userpw = vo.getUserpw();
-		encodepw = login.getUserpw();
+		userpw = vo.getUserPw();
+		encodepw = login.getUserPw();
 		
 		log.info(encodepw);
 		

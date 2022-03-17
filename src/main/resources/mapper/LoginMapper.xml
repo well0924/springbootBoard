@@ -6,20 +6,20 @@
 		insert into p_user
 			(userid,userpw,username,userphone,useremail,useraddr1,useraddr2,useraddr3,userdate,userupdate)
 		values
-			(#{userid},#{userpw},#{username},#{userphone},#{useremail},#{useraddr1},#{useraddr2},#{useraddr3},now(),null)
+			(#{userId},#{userPw},#{userName},#{userPhone},#{userEmail},#{userAddr1},#{userAddr2},#{userAddr3},now(),null)
 	</insert>
 	<!-- 로그인 -->
 	<select id="loginproc" parameterType="LoginVO" resultType="LoginVO">
 		select * from 
 			p_user
 		where 
-			userid = #{userid} 
+			userid = #{userId} 
 <!-- 				and  -->
 <!-- 			userpw = #{userpw}		 -->
 	</select>
 	<!-- 아이디중복체크o.k -->
 	<select id="IdCheck" parameterType="String" resultType="int">
-		select count(*) from p_user where userid = #{userid}
+		select count(*) from p_user where userid = #{userId}
 	</select>
 	<!-- 회원목록o.k -->
 	<select id="memberlist" resultType="LoginVO">
@@ -30,28 +30,28 @@
 		update 
 			p_user
 		set
-			userid = #{userid},
-			username = #{username},
-			useremail = #{useremail},
-			userphone = #{userphone},
-			useraddr1 = #{useraddr1},
-			useraddr2 = #{useraddr2},
-			useraddr3 = #{useraddr3},
+			userid = #{userId},
+			username = #{userName},
+			useremail = #{userEmail},
+			userphone = #{userPhone},
+			useraddr1 = #{userAddr1},
+			useraddr2 = #{userAddr2},
+			useraddr3 = #{userAddr3},
 			userupdate = now()
 		where
-			userid = #{userid}		 
+			userid = #{userId}		 
 	</update>
 	<!--  회원삭제 -->
 	<delete id="memberDelete" parameterType="String">
-		delete from p_user where userid = #{userid}
+		delete from p_user where userid = #{userId}
 	</delete>
 	<!-- 아이디 찾기 -->
 	<select id="searchId" resultType="LoginVO">
-		select userid from p_user where username = #{username} and userphone = #{userphone}
+		select userid from p_user where username = #{userName} and userphone = #{userPhone}
 	</select>
 	<!-- 비밀번호 찾기 -->
 	<select id="searchPw" resultType="LoginVO">
-		select userpw from p_user where userid = #{userid}
+		select userpw from p_user where userid = #{userId}
 	</select>
 	<!-- 시큐리티 권한로그인 -->
 	<select id="getuser" resultType="LoginVO">
@@ -69,6 +69,6 @@
 		from 
      		p_user u INNER JOIN p_role r ON  u.userlevel = r.roleid
 		WHERE 
-   			u.userid = #{userid};
+   			u.userid = #{userId};
 	</select>
 </mapper>

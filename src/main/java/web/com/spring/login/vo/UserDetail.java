@@ -14,13 +14,13 @@ public class UserDetail extends User{
 	private static final String Rolefix = "ROLE_";
 	
 	public UserDetail(LoginVO vo) {
-		super(vo.getUserid(),vo.getUserpw(),makeGrantedAuthorities(vo.getRolename()));
+		super(vo.getUserId(),vo.getUserPw(),makeGrantedAuthorities(vo.getRoleName()));
 	}
 	//권한 부여 메서드
-	private static List<GrantedAuthority> makeGrantedAuthorities(String rolename) {
+	private static List<GrantedAuthority> makeGrantedAuthorities(String roleName) {
 			
 		List<GrantedAuthority> list = new ArrayList<>();
-        list.add(new SimpleGrantedAuthority(Rolefix + rolename));
+        list.add(new SimpleGrantedAuthority(Rolefix + roleName));
         return list;
 	}
 }
