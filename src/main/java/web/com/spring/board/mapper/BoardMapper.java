@@ -18,7 +18,7 @@ public interface BoardMapper {
 	public BoardDto.Result detailBoard(Integer boardId)throws Exception;
 	//게시글 수정(파일첨부) o.k
 	public int boardUpdate(BoardDto.UpdateRequest vo)throws Exception;
-	//게시글 삭제 o.k
+	//게시글 삭제 (파일첨부)o.k
 	public int boardDelete(Integer boardId)throws Exception;
 	//게시글 선택 삭제 o.k
 	public int SelectDelte(String boardId)throws Exception;
