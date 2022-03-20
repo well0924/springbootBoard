@@ -8,7 +8,7 @@
 		values
 			(#{userId},#{userPw},#{userName},#{userPhone},#{userEmail},#{userAddr1},#{userAddr2},#{userAddr3},now(),null)
 	</insert>
-	<!-- 로그인 -->
+	<!-- 로그인o.k -->
 	<select id="loginproc" parameterType="LoginVO" resultType="LoginVO">
 		select * from 
 			p_user
@@ -53,7 +53,7 @@
 	<select id="searchPw" resultType="LoginVO">
 		select userpw from p_user where userid = #{userId}
 	</select>
-	<!-- 시큐리티 권한로그인 -->
+	<!-- 시큐리티 권한로그인 미작동.. -->
 	<select id="getuser" resultType="LoginVO">
 		select 
 		     u.userid,
@@ -64,10 +64,16 @@
 			 u.useraddr1,
 			 u.useraddr2,
 			 u.useraddr3,
+			 u.userDate,
+			 u.userupDate,
 			 r.roleid as userlevel,
 			 r.rolename
 		from 
-     		p_user u INNER JOIN p_role r ON  u.userlevel = r.roleid
+     		p_user u 
+     	INNER JOIN 
+     	    p_role r 
+     	ON  
+     		u.userlevel = r.roleid
 		WHERE 
    			u.userid = #{userId};
 	</select>

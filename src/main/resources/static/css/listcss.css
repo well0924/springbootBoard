@@ -1,0 +1,28 @@
+@charset "UTF-8";
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: 0;
+	float: left;
+}
+div#pagination.container{
+	display: flex;
+	justify-content: center;
+	margin-bottom:5px;
+}
+.col-lg-12{
+	display: flex;
+}
+select#searchType{
+	height:31px;
+}
+button#btnSearch.btn.btn-sm.btn-primary{
+	height:31px;
+	width:100px;
+}

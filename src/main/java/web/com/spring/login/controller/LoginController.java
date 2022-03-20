@@ -16,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +36,7 @@ import web.com.spring.login.vo.LoginVO;
 @RequestMapping("/login/*")
 @AllArgsConstructor
 public class LoginController {
-	
+	//서비스
 	private final LoginService service;	
 	//암호화 
 	@Autowired
@@ -90,16 +92,16 @@ public class LoginController {
 	//이메일 인증 전송기능 o.k
 	@ResponseBody
 	@GetMapping("/mailCheck")
-	public String emailCheck(@RequestParam String useremail)throws Exception{
+	public String emailCheck(@RequestParam String userEmail)throws Exception{
 		log.info("이메일 전송 확인");
-		log.info("메일:"+ useremail);
+		log.info("메일:"+ userEmail);
 		
 		Random random = new Random();
 		int checkNum = random.nextInt(88888)+11111;
 		log.info("인증번호:"+checkNum);
 		
 		String setFrom = "rayman0924@naver.com";
-		String toMail = useremail;
+		String toMail = userEmail;
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = 
 				"홈페이지를 방문해주셔서 감사합니다." +
@@ -134,8 +136,6 @@ public class LoginController {
 		userpw = vo.getUserPw();
 		encode = encoder.encode(userpw);
 		vo.setUserPw(encode);
-		System.out.println(userpw);
-		System.out.println(encode);
 		service.join(vo);
 		
 		return "/login/joinsuccess";
@@ -145,7 +145,7 @@ public class LoginController {
 	@PostMapping("/loginproc")
 	public String loginProc(LoginVO vo, RedirectAttributes redirect, HttpServletRequest req)throws Exception{
 		HttpSession session = req.getSession();
-		LoginVO login = service.loginproc(vo);
+		LoginVO login = service.getuser(vo);
 		log.info("로그인 기능");
 		
 		String userpw = "";
@@ -158,26 +158,28 @@ public class LoginController {
 		
 		boolean matcher = encoder.matches(userpw, encodepw);
 		
-		if(login != null && matcher ==true) {
+		if(login != null && matcher ==true) {//로그인이 된 경우
 			session.setAttribute("login", login);
 			System.out.println(login);
 			return "/login/successpage";
-		}else{
+		}else{//로그인이 안되는 경우
 			session.setAttribute("login", null);
 			redirect.addFlashAttribute("loginfail",false);
-			return "redirect:/login/loginpage";
+			return "redirect:/login/page";
 		}
 	}
 	
 	//로그아웃 기능
 	@GetMapping("/logoutproc")
 	public String logoutProc(HttpServletRequest req)throws Exception{
+		log.info("로그아웃기능");
 		HttpSession session = req.getSession();
 		
 		if(session.getAttribute("login")!=null) {
 			session.removeAttribute("login");
+			session.invalidate();
 		}
-		return "login/loginpage";
+		return "redirect:/board/list";
 	}
 	
 	//회원목록 출력하기
@@ -195,12 +197,30 @@ public class LoginController {
 		return member;
 	}
 	//회원수정
+	@PutMapping("/updatemember/{id}")
+	public Map<Object, Object> UpdateMember(@PathVariable(value="id") String userId)throws Exception{
+		log.info("회원수정기능");
+		Map<Object,Object> result = new HashMap<>();
+		try {
+			result.put("id", userId);
+			int count = service.memberUpdate(userId);
+			if(count >0) {
+				result.put("CommonO.k", 200);
+			}else {
+				result.put("Fail", 400);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
 	//회원삭제 및 탈퇴
-	@DeleteMapping("/deletemember")
-	public void DeleteMember(String userid)throws Exception{
+	@DeleteMapping("/deletemember/{id}")
+	public void DeleteMember(@PathVariable(value="id") String userId)throws Exception{
 		log.info("회원탈퇴 및 삭제기능");
 		try {
-			service.memberDelete(userid);
+			service.memberDelete(userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

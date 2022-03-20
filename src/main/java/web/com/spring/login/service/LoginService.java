@@ -21,6 +21,10 @@ public class LoginService{
 	public LoginVO loginproc(LoginVO vo)throws Exception{
 		return mapper.loginproc(vo);
 	};
+	//시큐리티 로그인
+	public LoginVO getuser(LoginVO vo)throws Exception{
+		return mapper.getuser(vo);
+	};
 	//회원중복체크 o.k
 	public int IdCheck(String userid)throws Exception{
 		return mapper.IdCheck(userid);

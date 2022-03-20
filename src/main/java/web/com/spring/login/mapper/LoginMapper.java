@@ -9,16 +9,18 @@ public interface LoginMapper {
 	
 	//회원가입 o.k
 	public void join(LoginVO vo)throws Exception;
-	//로그인,로그아웃
+	//로그인,로그아웃 o.k
 	public LoginVO loginproc(LoginVO vo)throws Exception;
+	//시큐리티 로그인
+	public LoginVO getuser(LoginVO vo)throws Exception;
 	//회원중복체크 o.k
-	public int IdCheck(String userid)throws Exception;
+	public int IdCheck(String userId)throws Exception;
 	//회원목록 o.k
 	public List<LoginVO>memberlist()throws Exception;
 	//회원 수정
-	public int memberUpdate(String userid)throws Exception;
+	public int memberUpdate(String userId)throws Exception;
 	//회원 삭제
-	public void memberDelete(String userid)throws Exception;
+	public void memberDelete(String userId)throws Exception;
 	//회원아이디 찾기
 	public LoginVO searchId(LoginVO vo)throws Exception;
 	//회원비밀번호 찾기

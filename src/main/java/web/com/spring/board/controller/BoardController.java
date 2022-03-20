@@ -48,7 +48,7 @@ public class BoardController {
 			@RequestParam(required = false, defaultValue = "T") String searchType,
 			@RequestParam(required = false) String keyword,
 			Criteria cri)throws Exception{
-		
+		log.info("목록페이지");
 		ModelAndView mv = new ModelAndView();
 		List<BoardVO> list= null;
 		

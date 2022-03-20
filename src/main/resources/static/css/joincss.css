@@ -1,0 +1,28 @@
+@charset "UTF-8";
+#titleheader{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+div.col-md-4 col-md-offset-3{
+	width: 100%;
+}
+div.login-panel panel panel-default{
+	margin-top: 10%; 
+	margin-bottom: 30%;
+}
+input#signUpUserId.form-control{
+	margin-bottom: 5px;
+}
+div.mail_check_wrap{
+	margin-bottom: 10px;
+}
+.correct{
+	color : green;
+}
+.incorrect{
+	color : red;
+}
+#backtoamin{
+	margin-top: 10px;
+}

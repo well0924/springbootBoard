@@ -1,0 +1,23 @@
+@charset "UTF-8";
+  #login-form .input-group, #login-form .form-group {
+        margin-top: 30px;
+        display:flex;
+    	justify-content: center;
+    }
+    
+    #login-form .btn-default {
+        background-color: #EEE;
+    }
+    
+    .brand {
+        color: #CCC;
+    }
+    div.col-sm-6.col-sm-offser-3 {
+    	display:flex;
+    	justify-content: center;
+    }
+    div.container{
+    	margin-top: 30px;
+    	display:flex;
+    	justify-content: center;
+    }
