@@ -64,7 +64,8 @@ public class BoardService {
 		String fullpath = detail.getFilepath()+ detail.getStoredfilename();
 		File file = new File(fullpath);
 		MultipartFile newfile = vo.getFile();
-		if(!newfile.isEmpty()) {
+		
+		if(newfile.isEmpty()) {
 			if(file.exists()) {
 				file.delete();
 			}

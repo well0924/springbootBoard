@@ -95,18 +95,23 @@ function boardupdate(){
 	var boardWriter= $('#boardWriter').val();
 	var boardContents = $('#boardContents').val();
 	var boardId =$('#boardId').val();
-	var frmdata ={
-			boardTitle,
-			boardWriter,
-			boardContents,
-			boardId
-		}
-	
+// 	var frmdata ={
+// 			boardTitle,
+// 			boardWriter,
+// 			boardContents,
+// 			boardId
+// 		}
+	var upfrm = $('#writeForm')
+	var formdate = new FormData(upfrm[0])
 	$.ajax({
 		url:'/api/board/'+boardId,
 		type:'PUT',
-		data:JSON.stringify(frmdata),
-		contentType:'application/json'
+		data:formdate,
+		contentType:'application/json',
+		processData: false,
+		contentType : false,
+		cache:false,
+		enctype: 'multipart/form-data'
 	}).done(function(data,textStatus,xhr){
 		alert('success');
 	}).fail(function(data,textStatus,xhr){
@@ -118,17 +123,18 @@ function boardupdate(){
 function boardDelete(){
 	var boardId = $('#boardId').val();
 	var Isconfirm = confirm('정말 삭제하시겠습니까?');
-	
-	$.ajax({
-		url:'/api/board/'+boardId,
-		type:'delete',
-		contentType:'application/json'
-	}).done(function(data,textStatus,xhr){
-		alert('success');
-	}).fail(function(data,textStatus,xhr){
-		alert('fail');
-	});
-	location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
+	if(Isconfirm){
+		$.ajax({
+			url:'/api/board/'+boardId,
+			type:'delete',
+			contentType:'application/json'
+		}).done(function(data,textStatus,xhr){
+			alert('success');
+			location.href='/board/list?'+'page='+[[${paging.cri.page}]]+'&perPageNum='+[[${paging.cri.perPageNum}]];
+		}).fail(function(data,textStatus,xhr){
+			alert('fail');
+		});	
+	}
 }
 //댓글 목록 출력
 $(document).ready(function(){

@@ -41,5 +41,12 @@ public class LoginService{
 	public void memberDelete(String userid)throws Exception{
 		mapper.memberDelete(userid);
 	};
-	
+	//회원아이디 찾기
+	public LoginVO searchId(LoginVO vo)throws Exception{
+		return mapper.searchId(vo);
+	};
+	//회원비밀번호 찾기
+	public LoginVO searchPw(LoginVO vo)throws Exception{
+		return mapper.searchPw(vo);
+	};
 }

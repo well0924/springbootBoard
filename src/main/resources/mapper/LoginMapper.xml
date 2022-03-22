@@ -47,11 +47,21 @@
 	</delete>
 	<!-- 아이디 찾기 -->
 	<select id="searchId" resultType="LoginVO">
-		select userid from p_user where username = #{userName} and userphone = #{userPhone}
+		select 
+			userid 
+		from 
+			p_user 
+		where 
+			username = #{userName} and userphone = #{userPhone}
 	</select>
 	<!-- 비밀번호 찾기 -->
 	<select id="searchPw" resultType="LoginVO">
-		select userpw from p_user where userid = #{userId}
+		select 
+			userpw 
+		from 
+			p_user 
+		where 
+			userid = #{userId}
 	</select>
 	<!-- 시큐리티 권한로그인 미작동.. -->
 	<select id="getuser" resultType="LoginVO">
