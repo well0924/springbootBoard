@@ -39,9 +39,6 @@
 
 4.미완성 기능
 
-- 로그인기능(시큐리티 기능이 제대로 작동이 안됨).
-- 댓글 수정기능(스크립트에서 출력이 되지 않음)
-
 5.테이블 
  <pre>
   <code>
@@ -103,9 +100,8 @@ alter table re_bbs add constraint re_bbs_ibfk_1 foreign key(bno) references p_bb
 );
  </code>
  </pre>
-6.구현 화면
 
-7.어려웠던 점
+6.어려웠던 점
 
 - 글 입력시 name에 vo클래스에 있는 변수명과 일치가 되어야 데이터가 전송이 된다는 점
 - 비동기처리시에 데이터 값 가져오는것이 아직도 조금은 미숙했다. 다음번에는 Json.stringify보다는 form.serialize()로 해보기.
